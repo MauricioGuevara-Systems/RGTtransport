@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RGT Transport — Tu carga, nuestro encargo.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #07111F;
+  --blue: #1457B8;
+  --electric: #3B82F6;
+  --ice: #E8F0FE;
+  --white: #ffffff;
+  --offwhite: #F7F8FA;
+  --gray: #6B7280;
+  --border: #E5E7EB;
+  --dark2: #0D1F35;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:'Inter',sans-serif;color:#111;background:var(--white);overflow-x:hidden}
+
+/* ── NAV ─────────────────────────────────────── */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 3rem;height:68px;
+  background:rgba(7,17,31,0.82);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(255,255,255,0.07);
+  transition:background .3s;
+}
+.nav-logo img{height:40px;filter:brightness(0) invert(1);display:block}
+.nav-links{display:flex;gap:2.2rem;list-style:none}
+.nav-links a{font-size:13px;font-weight:500;color:rgba(255,255,255,.65);
+  text-decoration:none;letter-spacing:.02em;transition:color .2s}
+.nav-links a:hover{color:#fff}
+.nav-cta{
+  background:var(--blue);color:#fff;border:none;border-radius:7px;
+  padding:9px 22px;font-size:13px;font-weight:600;cursor:pointer;
+  font-family:inherit;letter-spacing:.02em;
+  transition:background .2s,transform .15s;
+}
+.nav-cta:hover{background:#1a6bdb;transform:translateY(-1px)}
+
+/* ── HERO ────────────────────────────────────── */
+.hero{
+  position:relative;min-height:100vh;
+  display:flex;align-items:flex-end;
+  overflow:hidden;background:var(--navy);
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background-image:url('img/hero.jpg');
+  background-size:cover;background-position:center 40%;
+  opacity:.35;
+  transform:scale(1.04);
+  transition:opacity 1.2s,transform 6s ease;
+}
+.hero-bg.loaded{opacity:.38;transform:scale(1)}
+.hero-gradient{
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(7,17,31,.95) 0%,rgba(7,17,31,.6) 50%,rgba(7,17,31,.3) 100%),
+             linear-gradient(to top,rgba(7,17,31,1) 0%,transparent 50%);
+}
+.hero-content{
+  position:relative;z-index:2;
+  padding:0 3rem 80px;
+  max-width:820px;
+}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--electric);margin-bottom:28px;
+  opacity:0;transform:translateY(16px);
+  animation:fadeUp .7s .3s forwards;
+}
+.hero-eyebrow::before{content:'';display:block;width:28px;height:1.5px;background:var(--electric)}
+.hero h1{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(42px,6vw,74px);font-weight:800;
+  color:#fff;line-height:1.02;letter-spacing:-.03em;
+  margin-bottom:24px;
+  opacity:0;transform:translateY(20px);
+  animation:fadeUp .8s .5s forwards;
+}
+.hero h1 em{font-style:normal;color:var(--electric)}
+.hero-sub{
+  font-size:17px;color:rgba(255,255,255,.6);line-height:1.7;
+  max-width:520px;margin-bottom:16px;
+  opacity:0;transform:translateY(16px);
+  animation:fadeUp .7s .7s forwards;
+}
+.hero-slogan{
+  font-size:20px;font-style:italic;font-weight:500;
+  color:rgba(255,255,255,.85);margin-bottom:40px;
+  opacity:0;transform:translateY(16px);
+  animation:fadeUp .7s .85s forwards;
+}
+.hero-btns{
+  display:flex;gap:14px;flex-wrap:wrap;
+  opacity:0;transform:translateY(14px);
+  animation:fadeUp .7s 1s forwards;
+}
+.btn-primary{
+  background:var(--blue);color:#fff;border:none;border-radius:8px;
+  padding:14px 32px;font-size:14px;font-weight:600;cursor:pointer;
+  font-family:inherit;letter-spacing:.02em;
+  transition:background .2s,transform .15s,box-shadow .2s;
+  box-shadow:0 4px 20px rgba(20,87,184,.45);
+}
+.btn-primary:hover{background:#1a6bdb;transform:translateY(-2px);box-shadow:0 8px 28px rgba(20,87,184,.55)}
+.btn-ghost{
+  background:transparent;color:rgba(255,255,255,.75);
+  border:1px solid rgba(255,255,255,.2);border-radius:8px;
+  padding:14px 32px;font-size:14px;font-weight:500;cursor:pointer;
+  font-family:inherit;transition:all .2s;
+}
+.btn-ghost:hover{border-color:rgba(255,255,255,.5);color:#fff}
+
+/* ── STATS BAR ───────────────────────────────── */
+.stats{
+  background:var(--dark2);
+  border-bottom:1px solid rgba(255,255,255,.06);
+  display:flex;
+}
+.stat{
+  flex:1;padding:28px 24px;text-align:center;
+  border-right:1px solid rgba(255,255,255,.06);
+  transition:background .2s;
+}
+.stat:last-child{border-right:none}
+.stat:hover{background:rgba(255,255,255,.03)}
+.stat-num{
+  font-family:'Syne',sans-serif;
+  font-size:30px;font-weight:800;color:#fff;
+  line-height:1;letter-spacing:-.03em;margin-bottom:6px;
+}
+.stat-num span{color:var(--electric)}
+.stat-label{font-size:11px;font-weight:500;color:rgba(255,255,255,.4);letter-spacing:.08em;text-transform:uppercase}
+
+/* ── SECTIONS ────────────────────────────────── */
+.section{padding:88px 3rem}
+.section.light{background:var(--offwhite)}
+.section.white{background:var(--white)}
+.section.dark{background:var(--navy)}
+.section.dark2{background:var(--dark2)}
+.sec-label{
+  font-size:10.5px;font-weight:700;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--blue);margin-bottom:12px;
+  display:flex;align-items:center;gap:10px;
+}
+.sec-label::before{content:'';display:block;width:20px;height:1.5px;background:var(--blue)}
+.section h2{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(26px,3.5vw,38px);font-weight:800;
+  letter-spacing:-.025em;margin-bottom:14px;color:#0a0a0a;
+}
+.section.dark h2,.section.dark2 h2{color:#fff}
+.sec-sub{font-size:15px;color:var(--gray);line-height:1.7;max-width:520px;margin-bottom:52px}
+.section.dark .sec-sub,.section.dark2 .sec-sub{color:rgba(255,255,255,.45)}
+
+/* ── GALLERY ─────────────────────────────────── */
+.gallery{display:grid;grid-template-columns:1fr 1fr;height:460px;gap:3px;background:var(--navy)}
+.gal-a,.gal-b1,.gal-b2{background-size:cover;background-position:center;position:relative;overflow:hidden}
+.gal-a::after,.gal-b1::after,.gal-b2::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(7,17,31,.5),transparent);
+  opacity:0;transition:opacity .4s;
+}
+.gal-a:hover::after,.gal-b1:hover::after,.gal-b2:hover::after{opacity:1}
+.gal-right{display:grid;grid-template-rows:1fr 1fr;gap:3px}
+.gal-cap{
+  position:absolute;bottom:20px;left:20px;z-index:1;
+  background:rgba(7,17,31,.78);backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.1);border-radius:8px;
+  padding:10px 16px;
+}
+.gal-cap strong{font-size:12px;font-weight:600;color:#fff;display:block}
+.gal-cap small{font-size:10px;color:var(--electric)}
+
+/* ── SERVICIOS ───────────────────────────────── */
+.srv-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.srv-card{
+  background:#fff;border:1px solid var(--border);border-radius:14px;
+  padding:30px 26px;
+  border-top:2.5px solid var(--blue);
+  transition:transform .25s,box-shadow .25s;
+  position:relative;overflow:hidden;
+}
+.srv-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(59,130,246,.04),transparent);
+  opacity:0;transition:opacity .3s;
+}
+.srv-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.09)}
+.srv-card:hover::before{opacity:1}
+.srv-ico{
+  width:44px;height:44px;background:var(--navy);border-radius:10px;
+  display:flex;align-items:center;justify-content:center;margin-bottom:18px;
+}
+.srv-tag{
+  display:inline-block;background:var(--ice);color:var(--blue);
+  font-size:10px;font-weight:700;border-radius:4px;padding:3px 9px;
+  letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px;
+}
+.srv-card h3{font-size:15px;font-weight:700;color:#0a0a0a;margin-bottom:10px}
+.srv-card p{font-size:13px;color:var(--gray);line-height:1.65}
+
+/* ── MODALIDADES ─────────────────────────────── */
+.mod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:16px}
+.mod-card{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  border-radius:14px;padding:30px 26px;position:relative;overflow:hidden;
+  transition:border-color .2s,background .2s;
+}
+.mod-card:hover{border-color:rgba(59,130,246,.4);background:rgba(255,255,255,.06)}
+.mod-n{
+  font-family:'Syne',sans-serif;font-size:52px;font-weight:800;
+  color:rgba(59,130,246,.18);position:absolute;top:16px;right:20px;
+  line-height:1;
+}
+.mod-card h3{font-size:16px;font-weight:700;color:#fff;margin-bottom:10px}
+.mod-card p{font-size:13px;color:rgba(255,255,255,.5);line-height:1.65;margin-bottom:16px}
+.mod-benefit{background:rgba(7,17,31,.5);border-radius:8px;padding:14px}
+.mod-benefit strong{font-size:9.5px;font-weight:700;color:var(--electric);letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:5px}
+.mod-benefit p{font-size:12px;color:rgba(255,255,255,.4);line-height:1.55;margin:0}
+.extras-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.extra{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);
+  border-radius:8px;padding:14px 12px;
+  display:flex;align-items:center;gap:8px;
+}
+.extra-dot{width:6px;height:6px;border-radius:50%;background:var(--electric);flex-shrink:0}
+.extra span{font-size:12px;color:rgba(255,255,255,.55);font-weight:500}
+
+/* ── CALIDAD ─────────────────────────────────── */
+.cal-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.cal-card{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);
+  border-radius:14px;padding:28px 24px;
+  transition:border-color .2s,transform .2s;
+}
+.cal-card:hover{border-color:rgba(59,130,246,.3);transform:translateY(-2px)}
+.cal-card h3{font-size:14.5px;font-weight:700;color:#fff;margin-bottom:10px;margin-top:14px}
+.cal-card p{font-size:13px;color:rgba(255,255,255,.45);line-height:1.65}
+
+/* ── MISIÓN VISIÓN ───────────────────────────── */
+.mv-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.mv-card{border-radius:14px;padding:32px}
+.mv-card.mision{background:var(--blue)}
+.mv-card.vision{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
+.mv-head{font-size:9.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px}
+.mv-card.mision .mv-head{color:rgba(255,255,255,.55)}
+.mv-card.vision .mv-head{color:var(--electric)}
+.mv-card p{font-size:14px;color:rgba(255,255,255,.8);line-height:1.72}
+.valores-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.valor{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);
+  border-radius:9px;padding:16px;
+  display:flex;align-items:center;gap:10px;
+  transition:border-color .2s;
+}
+.valor:hover{border-color:rgba(59,130,246,.3)}
+.valor-dot{width:6px;height:6px;border-radius:50%;background:var(--blue);flex-shrink:0}
+.valor span{font-size:13px;font-weight:500;color:rgba(255,255,255,.8)}
+
+/* ── CONTACTO ────────────────────────────────── */
+.contact-wrap{display:grid;grid-template-columns:1fr 1.1fr;gap:52px;align-items:start}
+.contact-info h3{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#0a0a0a;margin-bottom:12px}
+.contact-info > p{font-size:14.5px;color:var(--gray);line-height:1.7;margin-bottom:32px}
+.c-rows{display:flex;flex-direction:column;gap:16px}
+.c-row{display:flex;align-items:center;gap:14px}
+.c-ico{
+  width:40px;height:40px;background:var(--ice);border-radius:9px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.c-row strong{font-size:14px;font-weight:700;color:#0a0a0a;display:block}
+.c-row span{font-size:13px;color:var(--gray)}
+.form-box{
+  background:#fff;border:1px solid var(--border);border-radius:16px;
+  padding:36px;display:flex;flex-direction:column;gap:14px;
+  box-shadow:0 8px 48px rgba(0,0,0,.07);
+}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fld{display:flex;flex-direction:column;gap:5px}
+.fld label{font-size:11px;font-weight:700;color:#555;letter-spacing:.06em;text-transform:uppercase}
+.fld input,.fld select,.fld textarea{
+  background:var(--offwhite);border:1px solid var(--border);border-radius:8px;
+  padding:11px 14px;font-size:14px;color:#111;font-family:inherit;outline:none;
+  transition:border .2s,box-shadow .2s;
+}
+.fld input:focus,.fld select:focus,.fld textarea:focus{
+  border-color:var(--blue);box-shadow:0 0 0 3px rgba(20,87,184,.1);
+}
+.fld textarea{min-height:88px;resize:vertical}
+.contact-info h3{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#0a0a0a;margin-bottom:12px}
+.contact-info>p{font-size:14.5px;color:var(--gray);line-height:1.7;margin-bottom:32px}
+.footer-logo img{height:34px;filter:brightness(0) invert(1);opacity:.5;display:block}
+.nav-logo img{height:40px;filter:brightness(0) invert(1);display:block}
+.gal-b1,.gal-b2{background-size:cover;background-position:center;overflow:hidden;transition:transform .4s}
+.gal-b1:hover,.gal-b2:hover{transform:scale(1.02)}
+.form-submit{
+  background:var(--blue);color:#fff;border:none;border-radius:8px;
+  padding:14px;font-size:14.5px;font-weight:700;cursor:pointer;
+  font-family:inherit;letter-spacing:.02em;
+  transition:background .2s,transform .15s,box-shadow .2s;
+  box-shadow:0 4px 16px rgba(20,87,184,.3);
+}
+.form-submit:hover{background:#1a6bdb;transform:translateY(-1px);box-shadow:0 8px 24px rgba(20,87,184,.4)}
+
+/* ── COBERTURA ───────────────────────────────── */
+.cob-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.cob-item{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);
+  border-radius:8px;padding:10px 12px;
+  font-size:12px;color:rgba(255,255,255,.6);font-weight:500;
+  transition:border-color .2s,color .2s;display:flex;align-items:center;gap:6px;
+}
+.cob-item:hover{border-color:rgba(59,130,246,.3);color:#fff}
+.cob-dot{width:5px;height:5px;border-radius:50%;background:var(--blue);flex-shrink:0}
+
+/* ── FOOTER ──────────────────────────────────── */
+.footer{
+  background:#040D1A;border-top:1px solid rgba(255,255,255,.06);
+  padding:36px 3rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;
+}
+.footer-logo img{height:34px;filter:brightness(0) invert(1);opacity:.5;display:block}
+.footer-copy{font-size:12px;color:rgba(255,255,255,.3);margin-top:6px}
+.footer-right{font-size:12.5px;color:rgba(255,255,255,.4);text-align:right}
+
+/* ── SCROLL REVEAL ───────────────────────────── */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ── ANIMATIONS ──────────────────────────────── */
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+
+/* ── RESPONSIVE ──────────────────────────────── */
+@media(max-width:1024px){
+  .srv-grid{grid-template-columns:1fr 1fr}
+  .cal-grid{grid-template-columns:1fr 1fr}
+  .extras-grid{grid-template-columns:1fr 1fr}
+  .cob-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:768px){
+  .nav-links{display:none}
+  .nav{padding:0 1.4rem}
+  .section{padding:60px 1.4rem}
+  .hero-content{padding:0 1.4rem 60px}
+  .hero h1{font-size:36px}
+  .hero-sub{font-size:15px}
+  .hero-slogan{font-size:17px}
+  .hero-btns{flex-direction:column;gap:10px}
+  .btn-primary,.btn-ghost{width:100%;text-align:center;padding:14px}
+  .stats{flex-direction:column}
+  .stat{border-right:none;border-bottom:1px solid rgba(255,255,255,.06);padding:20px}
+  .stat:last-child{border-bottom:none}
+  .gallery{grid-template-columns:1fr;height:auto}
+  .gal-a{height:260px}
+  .gal-right{grid-template-rows:1fr}
+  .gal-b2{display:none}
+  .srv-grid,.mod-grid,.cal-grid{grid-template-columns:1fr}
+  .mv-grid{grid-template-columns:1fr}
+  .valores-grid{grid-template-columns:1fr 1fr}
+  .contact-wrap{grid-template-columns:1fr}
+  .extras-grid{grid-template-columns:1fr 1fr}
+  .cob-grid{grid-template-columns:1fr 1fr}
+  .footer{flex-direction:column;text-align:center;padding:28px 1.4rem}
+  .footer-right{text-align:center}
+  .form-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-logo">
+    <img src="img/logo.png" alt="RGT Transport">
+  </div>
+  <ul class="nav-links">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#modalidades">Modalidades</a></li>
+    <li><a href="#calidad">Calidad</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">Cotizar ahora</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg" id="hero-bg"></div>
+  <div class="hero-gradient"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Autotransporte especializado · Norte y Centro del país</div>
+    <h1>27 años<br>moviendo <em>México</em><br>con precisión</h1>
+    <p class="hero-sub">Empresa 100% mexicana fundada en Monterrey. Carga local y foránea con el cuidado, la puntualidad y la confiabilidad que tu operación exige.</p>
+    <p class="hero-slogan">Tu carga, nuestro encargo.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">Solicitar cotización</button>
+      <button class="btn-ghost" onclick="document.getElementById('servicios').scrollIntoView({behavior:'smooth'})">Conocer más</button>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat reveal">
+    <div class="stat-num">27<span> años</span></div>
+    <div class="stat-label">De experiencia operando</div>
+  </div>
+  <div class="stat reveal">
+    <div class="stat-num">2<span> bases</span></div>
+    <div class="stat-label">Monterrey · Estado de México</div>
+  </div>
+  <div class="stat reveal">
+    <div class="stat-num">24<span>/7</span></div>
+    <div class="stat-label">Monitoreo y atención</div>
+  </div>
+  <div class="stat reveal">
+    <div class="stat-num">100<span>%</span></div>
+    <div class="stat-label">Flota propia certificada</div>
+  </div>
+</div>
+
+<!-- SERVICIOS -->
+<section class="section white" id="servicios">
+  <div class="sec-label">Servicios</div>
+  <h2>Experiencia que se siente<br>en cada entrega</h2>
+  <p class="sec-sub">Más de dos décadas perfeccionando cada ruta, cada protocolo y cada detalle que importa cuando tu mercancía está en camino.</p>
+  <div class="srv-grid">
+    <div class="srv-card reveal">
+      <div class="srv-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+      <div class="srv-tag">Servicio estrella</div>
+      <h3>Flota dedicada</h3>
+      <p>Unidades asignadas exclusivamente a tu operación. Conductores capacitados, rutas optimizadas y compromiso total con tu cadena de suministro.</p>
+    </div>
+    <div class="srv-card reveal">
+      <div class="srv-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"/><path d="M17 7l-5-5-5 5"/><path d="M17 17l-5 5-5-5"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M7 7l-5 5 5 5"/><path d="M17 7l5 5-5 5"/></svg></div>
+      <div class="srv-tag">Temperatura controlada</div>
+      <h3>Carga refrigerada</h3>
+      <p>Equipo Thermo King con graficador electrónico de temperatura. Tu producto llega en las condiciones exactas que necesita.</p>
+    </div>
+    <div class="srv-card reveal">
+      <div class="srv-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
+      <div class="srv-tag">Carga general</div>
+      <h3>Torton seco</h3>
+      <p>Unidades tipo Torton de 24" para todo tipo de carga general con máximo cuidado en el manejo, estiba y entrega en destino.</p>
+    </div>
+    <div class="srv-card reveal">
+      <div class="srv-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.87a16 16 0 0 0 6.07 6.07l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.9 16.9z"/></svg></div>
+      <div class="srv-tag">Siempre disponible</div>
+      <h3>Atención 24/7</h3>
+      <p>Centro de llamadas operando las 24 horas. Cualquier incidencia en ruta tiene respuesta inmediata, sin importar la hora.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<div class="gallery">
+  <div class="gal-a" id="gal-a">
+    <div class="gal-cap">
+      <strong>Flota RGT Transport · Unidades Tipo Torton de 24"</strong>
+      <small>San Nicolás de los Garza, N.L. · Desde 1999</small>
+    </div>
+  </div>
+  <div class="gal-right">
+    <div class="gal-b1" id="gal-b1"></div>
+    <div class="gal-b2" id="gal-b2"></div>
+  </div>
+</div>
+
+<!-- MODALIDADES -->
+<section class="section dark" id="modalidades">
+  <div class="sec-label">Modalidades</div>
+  <h2>Tres formas de trabajar<br>con nosotros</h2>
+  <p class="sec-sub">Adaptamos el servicio a la estructura y necesidades de tu operación logística.</p>
+  <div class="mod-grid">
+    <div class="mod-card reveal">
+      <div class="mod-n">1</div>
+      <h3>Sistema de Renta</h3>
+      <p>El cliente nos cede la administración de su logística. Se acuerda una renta fija mensual y RGT se hace cargo de todo.</p>
+      <div class="mod-benefit">
+        <strong>Beneficio</strong>
+        <p>Disminución de activo laboral. Vehículos dedicados en tu empresa. RGT resuelve cualquier problema.</p>
+      </div>
+    </div>
+    <div class="mod-card reveal">
+      <div class="mod-n">2</div>
+      <h3>Equipo Dedicado</h3>
+      <p>Acuerdo de determinada cantidad de vehículos para el cliente con disponibilidad exclusiva.</p>
+      <div class="mod-benefit">
+        <strong>Beneficio</strong>
+        <p>Realizamos la cantidad de repartos y recolecciones que el cliente solicite con total flexibilidad.</p>
+      </div>
+    </div>
+    <div class="mod-card reveal">
+      <div class="mod-n">3</div>
+      <h3>Sistema por Viaje</h3>
+      <p>Asignación de vehículo de acuerdo a la solicitud puntual del cliente. Entrega puerta a puerta.</p>
+      <div class="mod-benefit">
+        <strong>Beneficio</strong>
+        <p>Se entrega dentro de los horarios establecidos por el cliente con reparto a la medida.</p>
+      </div>
+    </div>
+  </div>
+  <div class="extras-grid">
+    <div class="extra"><div class="extra-dot"></div><span>GPS SAMSARA 24/7</span></div>
+    <div class="extra"><div class="extra-dot"></div><span>Graficador de temperatura</span></div>
+    <div class="extra"><div class="extra-dot"></div><span>Rutas inteligentes</span></div>
+    <div class="extra"><div class="extra-dot"></div><span>Seguro de carga $650,000</span></div>
+    <div class="extra"><div class="extra-dot"></div><span>Operadores con RCONTROL</span></div>
+  </div>
+</section>
+
+<!-- CALIDAD -->
+<section class="section dark2" id="calidad">
+  <div class="sec-label">Calidad de servicio</div>
+  <h2>Por qué confiar en RGT</h2>
+  <p class="sec-sub">No solo transportamos mercancía. Cuidamos tu operación como si fuera nuestra.</p>
+  <div class="cal-grid">
+    <div class="cal-card reveal">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <h3>Puntualidad garantizada</h3>
+      <p>Cumplimiento de ventanas de entrega con seguimiento GPS en tiempo real y alertas proactivas ante cualquier desviación.</p>
+    </div>
+    <div class="cal-card reveal">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      <h3>Visibilidad total</h3>
+      <p>Rastreo SAMSARA de cada unidad en tiempo real. Sabes exactamente dónde está tu carga en todo momento.</p>
+    </div>
+    <div class="cal-card reveal">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <h3>Atención personalizada</h3>
+      <p>Cada cliente tiene un encargado de cuenta directo. Sin call centers genéricos ni respuestas automatizadas.</p>
+    </div>
+    <div class="cal-card reveal">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+      <h3>Operadores certificados</h3>
+      <p>Conductores con licencias vigentes, RCONTROL, capacitación continua y protocolos de seguridad en cada ruta.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MISIÓN VISIÓN -->
+<section class="section dark">
+  <div class="sec-label">Cultura RGT</div>
+  <h2>Misión y Visión</h2>
+  <p class="sec-sub">Los principios que guían cada decisión y cada kilómetro que recorremos.</p>
+  <div class="mv-grid">
+    <div class="mv-card mision reveal">
+      <div class="mv-head">Misión</div>
+      <p>Satisfacer las necesidades de nuestros clientes mediante la colaboración en su logística, transportando de manera segura y entregando puntualmente su mercancía, con colaboradores altamente motivados, calificados y comprometidos con la empresa y nuestros clientes.</p>
+    </div>
+    <div class="mv-card vision reveal">
+      <div class="mv-head">Visión</div>
+      <p>Ser la empresa líder en el mercado en nivel de servicio, confiabilidad y satisfacción de nuestros clientes y proveedores, posicionándonos como líderes en la transportación de mercancías perecederas.</p>
+    </div>
+  </div>
+  <div class="sec-label" style="margin-bottom:16px">Valores</div>
+  <div class="valores-grid">
+    <div class="valor"><div class="valor-dot"></div><span>Enfoque al cliente</span></div>
+    <div class="valor"><div class="valor-dot"></div><span>Liderazgo</span></div>
+    <div class="valor"><div class="valor-dot"></div><span>Respeto</span></div>
+    <div class="valor"><div class="valor-dot"></div><span>Trabajo en equipo</span></div>
+    <div class="valor"><div class="valor-dot"></div><span>Honestidad</span></div>
+    <div class="valor"><div class="valor-dot"></div><span>Compromiso</span></div>
+    <div class="valor"><div class="valor-dot"></div><span>Calidad</span></div>
+    <div class="valor"><div class="valor-dot"></div><span>Búsqueda de la Excelencia</span></div>
+  </div>
+</section>
+
+<!-- COBERTURA -->
+<section class="section dark2">
+  <div class="sec-label">Cobertura nacional</div>
+  <h2>Presencia en todo<br>el territorio mexicano</h2>
+  <p class="sec-sub">Nuestros destinos más frecuentes dentro del territorio nacional.</p>
+  <div class="cob-grid">
+    <div class="cob-item"><div class="cob-dot"></div>Nuevo León</div>
+    <div class="cob-item"><div class="cob-dot"></div>Baja California Sur</div>
+    <div class="cob-item"><div class="cob-dot"></div>Sonora</div>
+    <div class="cob-item"><div class="cob-dot"></div>Chihuahua</div>
+    <div class="cob-item"><div class="cob-dot"></div>Sinaloa</div>
+    <div class="cob-item"><div class="cob-dot"></div>Durango</div>
+    <div class="cob-item"><div class="cob-dot"></div>Coahuila</div>
+    <div class="cob-item"><div class="cob-dot"></div>Tamaulipas</div>
+    <div class="cob-item"><div class="cob-dot"></div>Zacatecas</div>
+    <div class="cob-item"><div class="cob-dot"></div>Jalisco</div>
+    <div class="cob-item"><div class="cob-dot"></div>Estado de México</div>
+    <div class="cob-item"><div class="cob-dot"></div>Ciudad de México</div>
+    <div class="cob-item"><div class="cob-dot"></div>Puebla</div>
+    <div class="cob-item"><div class="cob-dot"></div>Tabasco</div>
+    <div class="cob-item"><div class="cob-dot"></div>Oaxaca</div>
+    <div class="cob-item"><div class="cob-dot"></div>Chiapas</div>
+    <div class="cob-item"><div class="cob-dot"></div>Guerrero</div>
+    <div class="cob-item"><div class="cob-dot"></div>San Luis Potosí</div>
+    <div class="cob-item"><div class="cob-dot"></div>Aguascalientes</div>
+    <div class="cob-item"><div class="cob-dot"></div>Guanajuato</div>
+    <div class="cob-item"><div class="cob-dot"></div>Veracruz</div>
+    <div class="cob-item"><div class="cob-dot"></div>Querétaro</div>
+    <div class="cob-item"><div class="cob-dot"></div>Michoacán</div>
+    <div class="cob-item"><div class="cob-dot"></div>Yucatán</div>
+    <div class="cob-item"><div class="cob-dot"></div>Quintana Roo</div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section class="section white" id="contacto">
+  <div class="sec-label">Contacto</div>
+  <h2>Hablemos de tu operación</h2>
+  <p class="sec-sub">Cuéntanos qué necesitas y te respondemos con una propuesta a la medida de tu cadena de suministro.</p>
+  <div class="contact-wrap">
+    <div class="contact-info">
+      <h3>Atención directa,<br>sin intermediarios</h3>
+      <p>En RGT hablas con quien decide. Nuestro equipo en Monterrey está disponible para atenderte de inmediato.</p>
+      <div class="c-rows">
+        <div class="c-row">
+          <div class="c-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1457B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></div>
+          <div><strong>Sede principal</strong><span>Av. Bonifacio Salinas Leal 153, San Nicolás de los Garza, N.L.</span></div>
+        </div>
+        <div class="c-row">
+          <div class="c-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1457B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.87a16 16 0 0 0 6.07 6.07l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.9 16.9z"/></svg></div>
+          <div><strong>Teléfono</strong><span>81 1339 1597</span></div>
+        </div>
+        <div class="c-row">
+          <div class="c-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1457B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          <div><strong>Correo</strong><span>ventas@rgttransport.com</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="form-box">
+      <div class="form-row">
+        <div class="fld"><label>Nombre</label><input type="text" placeholder="Tu nombre"></div>
+        <div class="fld"><label>Empresa</label><input type="text" placeholder="Nombre de la empresa"></div>
+      </div>
+      <div class="fld"><label>Correo electrónico</label><input type="email" placeholder="correo@empresa.com"></div>
+      <div class="form-row">
+        <div class="fld"><label>Teléfono</label><input type="tel" placeholder="+52 (81) ___-____"></div>
+        <div class="fld"><label>Tipo de servicio</label>
+          <select>
+            <option value="">Selecciona...</option>
+            <option>Sistema de Renta</option>
+            <option>Equipo Dedicado</option>
+            <option>Sistema por Viaje</option>
+            <option>Carga refrigerada</option>
+            <option>Otro</option>
+          </select>
+        </div>
+      </div>
+      <div class="fld"><label>Cuéntanos tu necesidad</label><textarea placeholder="Ruta, tipo de carga, frecuencia, volumen..."></textarea></div>
+      <button class="form-submit" id="form-btn">Enviar solicitud</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div>
+    <div class="footer-logo"><img src="img/logo.png" alt="RGT Transport"></div>
+    <div class="footer-copy">© 2026 RGT Transport, S.A. de C.V. · San Nicolás de los Garza, Nuevo León</div>
+  </div>
+  <div class="footer-right">
+    ventas@rgttransport.com<br>
+    81 1339 1597
+  </div>
+</footer>
+
+<script>
+// Images
+const hb = document.getElementById('hero-bg');
+hb.style.backgroundImage = "url('img/hero.jpg')";
+setTimeout(() => hb.classList.add('loaded'), 100);
+document.getElementById('gal-a').style.backgroundImage  = "url('img/gallery1.jpg')";
+document.getElementById('gal-a').style.backgroundPosition = 'center 52%';
+document.getElementById('gal-b1').style.backgroundImage = "url('img/gallery2.jpg')";
+document.getElementById('gal-b1').style.backgroundPosition = 'center 45%';
+document.getElementById('gal-b2').style.backgroundImage = "url('img/gallery3.jpg')";
+document.getElementById('gal-b2').style.backgroundPosition = 'center 42%';
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Nav scroll effect
+window.addEventListener('scroll', () => {
+  document.querySelector('.nav').style.background =
+    window.scrollY > 60 ? 'rgba(7,17,31,0.97)' : 'rgba(7,17,31,0.82)';
+});
+
+// Leads + form
+const LEADS_KEY = 'rgt_leads';
+function getLeads(){try{return JSON.parse(localStorage.getItem(LEADS_KEY)||'[]')}catch(e){return[]}}
+function saveLead(l){const leads=getLeads();l.id=Date.now();l.fecha=new Date().toLocaleString('es-MX',{timeZone:'America/Monterrey'});leads.unshift(l);localStorage.setItem(LEADS_KEY,JSON.stringify(leads));return leads.length}
+
+document.getElementById('form-btn').addEventListener('click', async function(){
+  const inputs = document.querySelectorAll('.form-box input,.form-box select,.form-box textarea');
+  const lead = {}; const labels = ['nombre','empresa','correo','telefono','servicio','mensaje'];
+  inputs.forEach((el,i) => { lead[labels[i]||'f'+i] = el.value });
+  if(!lead.nombre || !lead.correo){ alert('Por favor llena al menos nombre y correo.'); return; }
+  saveLead(lead);
+  this.textContent = 'Enviando...'; this.disabled = true;
+  try {
+    const r = await fetch('https://formspree.io/f/ventas@rgttransport.com', {
+      method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body: JSON.stringify({_subject:'Nueva cotización RGT Transport',_replyto:lead.correo,...lead})
+    });
+    this.textContent = r.ok ? 'Solicitud enviada ✓' : 'Solicitud enviada ✓';
+    this.style.background = '#0d5c1a';
+  } catch(e) {
+    const b=`Nombre: ${lead.nombre}%0AEmpresa: ${lead.empresa}%0ATel: ${lead.telefono}%0AServicio: ${lead.servicio}%0AMensaje: ${lead.mensaje}`;
+    window.location.href=`mailto:ventas@rgttransport.com?subject=Cotización RGT&body=${b}`;
+  }
+  setTimeout(() => { this.textContent='Enviar solicitud'; this.style.background=''; this.disabled=false; inputs.forEach(el=>el.value=''); }, 3500);
+});
+
+// Ctrl+Shift+L → leads panel
+document.addEventListener('keydown', e => {
+  if(e.ctrlKey && e.shiftKey && e.key==='L'){
+    const leads=getLeads(); if(!leads.length){alert('Sin leads.');return;}
+    const w=window.open('','_blank','width=960,height=640');
+    w.document.write(`<html><head><title>RGT Leads (${leads.length})</title><style>body{font-family:Inter,sans-serif;padding:24px;background:#f7f8fa}h2{margin-bottom:16px;color:#07111F}table{width:100%;border-collapse:collapse;font-size:12px}th{background:#07111F;color:#fff;padding:10px 12px;text-align:left}td{padding:9px 12px;border-bottom:1px solid #e5e7eb;vertical-align:top}.btn{background:#1457B8;color:#fff;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;margin-bottom:16px;font-size:12px}</style></head><body><h2>Leads RGT — ${leads.length} solicitudes</h2><button class="btn" onclick="const c=['Fecha,Nombre,Empresa,Correo,Teléfono,Servicio,Mensaje'];${JSON.stringify(leads)}.forEach(l=>c.push([l.fecha,l.nombre,l.empresa,l.correo,l.telefono,l.servicio,l.mensaje].map(v=>'&quot;'+(v||'')+'&quot;').join(',')));const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(c.join('\\n'));a.download='rgt_leads.csv';a.click()">Exportar CSV</button><table><tr><th>Fecha</th><th>Nombre</th><th>Empresa</th><th>Correo</th><th>Teléfono</th><th>Servicio</th><th>Mensaje</th></tr>${leads.map(l=>`<tr><td>${l.fecha||''}</td><td>${l.nombre||''}</td><td>${l.empresa||''}</td><td>${l.correo||''}</td><td>${l.telefono||''}</td><td>${l.servicio||''}</td><td>${l.mensaje||''}</td></tr>`).join('')}</table></body></html>`);
+  }
+});
+</script>
+</body>
+</html>
