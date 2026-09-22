@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RGT Transport — Tu carga, nuestro encargo.</title>
+<link rel="preload" as="image" href="img/hero.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
@@ -81,7 +82,7 @@ a { text-decoration:none; color:inherit }
   position:absolute; inset:0;
   background-image:url('img/hero.jpg');
   background-size:cover; background-position:center 35%;
-  opacity:0; transition:opacity 1.4s ease;
+  opacity:0; transition:opacity 0.9s ease;
 }
 .hero-bg.loaded { opacity:0.32 }
 .hero-vignette {
@@ -175,6 +176,7 @@ a { text-decoration:none; color:inherit }
 
 /* ─── STATS ──────────────────────────────────────────── */
 .stats {
+  contain:layout;
   background:var(--navy2);
   border-top:1px solid var(--border);
   border-bottom:1px solid var(--border);
@@ -264,7 +266,7 @@ h2 {
 .gal-fill {
   position:absolute; inset:0;
   background-size:cover; background-position:center;
-  transition:transform 0.6s ease;
+  transition:transform 0.3s ease;
 }
 .gal-a:hover .gal-fill,
 .gal-b:hover .gal-fill,
@@ -422,9 +424,10 @@ h2 {
 .footer-right { text-align:right; font-size:12.5px; color:rgba(255,255,255,0.35); line-height:1.9 }
 
 /* ─── REVEAL ─────────────────────────────────────────── */
-.rv { opacity:0; transform:translateY(28px); transition:opacity 0.75s, transform 0.75s }
+.rv { opacity:0; transform:translateY(16px); transition:opacity 0.45s ease, transform 0.45s ease; will-change:opacity,transform }
+.rv.on { will-change:auto }
 .rv.on { opacity:1; transform:none }
-.rv2 { opacity:0; transform:translateY(16px); transition:opacity 0.6s, transform 0.6s }
+.rv2 { opacity:0; transform:translateY(10px); transition:opacity 0.35s ease, transform 0.35s ease }
 .rv2.on { opacity:1; transform:none }
 
 /* ─── ANIMATIONS ─────────────────────────────────────── */
@@ -785,7 +788,7 @@ h2 {
 // ── IMAGES ──────────────────────────────────────────────
 const heroBg = document.getElementById('hero-bg');
 heroBg.style.backgroundImage = "url('img/hero.jpg')";
-setTimeout(() => heroBg.classList.add('loaded'), 80);
+setTimeout(() => heroBg.classList.add('loaded'), 50);
 
 document.getElementById('gal-a').style.cssText += "background-image:url('img/gallery1.jpg');background-position:center 52%;";
 document.getElementById('gal-b').style.cssText += "background-image:url('img/gallery2.jpg');background-position:center 45%;";
@@ -798,19 +801,15 @@ window.addEventListener('scroll', () => {
 
 // ── REVEAL ───────────────────────────────────────────────
 const obs = new IntersectionObserver((entries) => {
-  entries.forEach((e, i) => {
+  entries.forEach(e => {
     if (e.isIntersecting) {
-      const delay = e.target.dataset.delay || (i * 70);
-      setTimeout(() => e.target.classList.add('on'), delay);
+      e.target.classList.add('on');
       obs.unobserve(e.target);
     }
   });
-}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+}, { threshold: 0.07, rootMargin: '0px 0px -16px 0px' });
 
-document.querySelectorAll('.rv, .rv2').forEach((el, i) => {
-  el.dataset.delay = i * 60;
-  obs.observe(el);
-});
+document.querySelectorAll('.rv, .rv2').forEach(el => obs.observe(el));
 
 // ── LEADS + FORM ─────────────────────────────────────────
 const LEADS_KEY = 'rgt_leads';
