@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RGT Transport — Tu carga, nuestro encargo.</title>
-<link rel="preload" as="image" href="img/hero.jpg">
+<link rel="preload" as="image" href="img/hero.jpeg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
@@ -80,11 +80,12 @@ a { text-decoration:none; color:inherit }
 }
 .hero-bg {
   position:absolute; inset:0;
-  background-image:url('img/hero.jpg');
-  background-size:cover; background-position:center 35%;
+  background-image:url('img/hero.jpeg');
+  background-size:cover;
+  background-position:center 40%;
   opacity:0; transition:opacity 0.9s ease;
 }
-.hero-bg.loaded { opacity:0.32 }
+.hero-bg.loaded { opacity:0.38 }
 .hero-vignette {
   position:absolute; inset:0;
   background:
@@ -787,12 +788,17 @@ h2 {
 <script>
 // ── IMAGES ──────────────────────────────────────────────
 const heroBg = document.getElementById('hero-bg');
-heroBg.style.backgroundImage = "url('img/hero.jpg')";
+heroBg.style.backgroundImage = "url('img/hero.jpeg')";
+// Torton lateral con Cerro de la Silla - posición centrada para mostrar el cerro
+heroBg.style.backgroundPosition = "center 45%";
 setTimeout(() => heroBg.classList.add('loaded'), 50);
 
-document.getElementById('gal-a').style.cssText += "background-image:url('img/gallery1.jpg');background-position:center 52%;";
-document.getElementById('gal-b').style.cssText += "background-image:url('img/gallery2.jpg');background-position:center 45%;";
-document.getElementById('gal-c').style.cssText += "background-image:url('img/gallery3.jpg');background-position:center 42%;";
+// gallery-a: interior de caja refrigerada - centrado perfecto
+document.getElementById('gal-a').style.cssText += "background-image:url('img/gallery1.jpeg');background-position:center center;";
+// gallery-b: dos camiones trasera
+document.getElementById('gal-b').style.cssText += "background-image:url('img/gallery2.jpeg');background-position:center 50%;";
+// gallery-c: cabina con logo RGT - ángulo desde abajo con cielo azul
+document.getElementById('gal-c').style.cssText += "background-image:url('img/gallery3.png');background-position:center 35%;";
 
 // ── NAV SCROLL ───────────────────────────────────────────
 window.addEventListener('scroll', () => {
