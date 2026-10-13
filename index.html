@@ -370,6 +370,60 @@ h2 {
 .cob-dot { width:4px; height:4px; border-radius:50%; background:var(--blue2); flex-shrink:0 }
 
 /* ─── CONTACTO ───────────────────────────────────────── */
+/* Selector de servicio */
+.svc-selector {
+  display:grid; grid-template-columns:1fr 1fr; gap:16px;
+  margin-bottom:48px;
+}
+.svc-card {
+  border-radius:18px; padding:32px 28px;
+  border:2px solid var(--line); background:#fff;
+  position:relative; overflow:hidden;
+  transition:border-color 0.25s, box-shadow 0.25s, transform 0.2s;
+  cursor:default;
+}
+.svc-card:hover { border-color:var(--blue); box-shadow:0 8px 40px rgba(26,79,214,0.12); transform:translateY(-2px) }
+.svc-card-badge {
+  display:inline-block; margin-bottom:14px;
+  font-size:10px; font-weight:700; letter-spacing:0.15em; text-transform:uppercase;
+  padding:4px 10px; border-radius:4px;
+}
+.svc-card-badge.ltl { background:var(--ice); color:var(--blue) }
+.svc-card-badge.ftl { background:#F1F5F9; color:#475569 }
+.svc-card h3 { font-size:20px; font-weight:600; color:var(--ink); margin-bottom:8px }
+.svc-card p  { font-size:13.5px; font-weight:300; color:var(--slate); line-height:1.7; margin-bottom:22px }
+.svc-card-pills { display:flex; flex-wrap:wrap; gap:7px; margin-bottom:24px }
+.svc-pill {
+  font-size:11.5px; color:var(--slate); font-weight:400;
+  padding:5px 10px; border-radius:6px;
+  background:var(--off); border:1px solid var(--line);
+}
+.svc-card-btn {
+  width:100%; padding:13px;
+  border-radius:10px; border:none;
+  font-size:14px; font-weight:600; letter-spacing:0.02em;
+  transition:background 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+.svc-card-btn.btn-blue {
+  background:var(--blue); color:#fff;
+  box-shadow:0 4px 20px rgba(26,79,214,0.35);
+}
+.svc-card-btn.btn-blue:hover { background:var(--blue2); transform:translateY(-1px); box-shadow:0 8px 28px rgba(26,79,214,0.45) }
+.svc-card-btn.btn-outline-ink {
+  background:transparent; color:var(--ink);
+  border:1.5px solid var(--line);
+}
+.svc-card-btn.btn-outline-ink:hover { border-color:var(--ink); background:var(--off) }
+.svc-card-sep {
+  height:1px; background:var(--line); margin:20px 0;
+}
+.svc-card-anchor {
+  font-size:12px; color:var(--blue); font-weight:500;
+  cursor:pointer; text-decoration:underline; text-underline-offset:2px;
+}
+.svc-card-anchor:hover { color:var(--blue2) }
+
+/* Divisor o texto entre las dos tarjetas */
 .contact-grid { display:grid; grid-template-columns:1fr 1.15fr; gap:64px; align-items:start }
 .contact-info h3 {
   font-family:'DM Serif Display', serif;
@@ -412,6 +466,14 @@ h2 {
   margin-top:4px;
 }
 .form-cta:hover { background:var(--blue2); transform:translateY(-1px); box-shadow:0 8px 28px rgba(26,79,214,0.45) }
+
+/* Contacto form oculto por defecto, se muestra al elegir servicio dedicado */
+.contact-form-section { display:none }
+.contact-form-section.visible { display:block }
+
+@media(max-width:900px) {
+  .svc-selector { grid-template-columns:1fr }
+}
 
 /* ─── FOOTER ─────────────────────────────────────────── */
 .footer {
@@ -481,7 +543,7 @@ h2 {
     <li><a href="#calidad">Calidad</a></li>
     <li><a href="#contacto">Contacto</a></li>
   </ul>
-  <button class="nav-btn" onclick="window.location.href='cotizar.html'">Cotizar ahora</button>
+  <button class="nav-btn" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">Cotizar ahora</button>
 </nav>
 
 <!-- HERO -->
@@ -495,7 +557,7 @@ h2 {
       <p class="hero-desc">Empresa 100% mexicana fundada en Monterrey. Carga local y foránea con el cuidado, la puntualidad y la confiabilidad que tu operación exige.</p>
       <p class="hero-slogan">Tu carga, nuestro encargo.</p>
       <div class="hero-btns">
-        <button class="btn-solid" onclick="window.location.href='cotizar.html'">Cotizar mi envío ahora</button>
+        <button class="btn-solid" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">Cotizar mi envío ahora</button>
         <button class="btn-outline" onclick="document.getElementById('servicios').scrollIntoView({behavior:'smooth'})">Conocer más</button>
       </div>
     </div>
@@ -727,50 +789,92 @@ h2 {
 <section class="s s-white" id="contacto">
   <div class="wrap">
     <div class="rv"><div class="s-label">Contacto</div></div>
-    <h2 class="rv">Hablemos de tu operación</h2>
-    <p class="s-sub rv">Cuéntanos qué necesitas y te respondemos con una propuesta a la medida de tu cadena de suministro.</p>
-    <div class="contact-grid">
-      <div class="contact-info rv">
-        <h3>Atención directa,<br>sin intermediarios</h3>
-        <p>En RGT hablas con quien decide. Nuestro equipo en Monterrey está disponible para atenderte de inmediato.</p>
-        <div class="c-rows">
-          <div class="c-row">
-            <div class="c-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1A4FD6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></div>
-            <div><strong>Sede principal</strong><span>Av. Bonifacio Salinas Leal 153, San Nicolás de los Garza, N.L.</span></div>
-          </div>
-          <div class="c-row">
-            <div class="c-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1A4FD6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.87a16 16 0 0 0 6.07 6.07l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.9 16.9z"/></svg></div>
-            <div><strong>Teléfono</strong><span>81 1339 1597</span></div>
-          </div>
-          <div class="c-row">
-            <div class="c-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1A4FD6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-            <div><strong>Correo</strong><span>ventas@rgttransport.com</span></div>
-          </div>
+    <h2 class="rv">¿Qué tipo de servicio<br>necesitas?</h2>
+    <p class="s-sub rv">Elige la opción que mejor describe tu operación y te orientamos de inmediato.</p>
+
+    <!-- Selector de servicio -->
+    <div class="svc-selector rv">
+
+      <!-- Tarjeta 1: Carga Consolidada -->
+      <div class="svc-card">
+        <span class="svc-card-badge ltl">Carga Consolidada · LTL</span>
+        <h3>Envía desde 1 tarima</h3>
+        <p>Comparte el espacio de un Torton 24" con otros clientes. Solo pagas lo que usas. Ruta activa Monterrey → Chihuahua.</p>
+        <div class="svc-card-pills">
+          <span class="svc-pill">Desde 1 tarima</span>
+          <span class="svc-pill">Precio por WhatsApp</span>
+          <span class="svc-pill">Factura incluida</span>
+          <span class="svc-pill">Rastreo GPS 24/7</span>
         </div>
+        <button class="svc-card-btn btn-blue" onclick="window.location.href='cotizar.html'">
+          Cotizar consolidado →
+        </button>
       </div>
-      <div class="form-box rv">
-        <div class="form-row">
-          <div class="fld"><label>Nombre</label><input type="text" placeholder="Tu nombre"></div>
-          <div class="fld"><label>Empresa</label><input type="text" placeholder="Nombre de la empresa"></div>
+
+      <!-- Tarjeta 2: Servicio Completo / Dedicado -->
+      <div class="svc-card">
+        <span class="svc-card-badge ftl">Servicio Completo</span>
+        <h3>Camión dedicado o por viaje</h3>
+        <p>Unidad exclusiva para tu carga. Sistema de Renta, Equipo Dedicado o por Viaje. Cobertura nacional, refrigerado incluido.</p>
+        <div class="svc-card-pills">
+          <span class="svc-pill">Flota dedicada</span>
+          <span class="svc-pill">Carga refrigerada</span>
+          <span class="svc-pill">Cobertura nacional</span>
+          <span class="svc-pill">Renta mensual</span>
         </div>
-        <div class="fld"><label>Correo electrónico</label><input type="email" placeholder="correo@empresa.com"></div>
-        <div class="form-row">
-          <div class="fld"><label>Teléfono</label><input type="tel" placeholder="+52 (81) ___-____"></div>
-          <div class="fld"><label>Tipo de servicio</label>
-            <select>
-              <option value="">Selecciona...</option>
-              <option>Sistema de Renta</option>
-              <option>Equipo Dedicado</option>
-              <option>Sistema por Viaje</option>
-              <option>Carga refrigerada</option>
-              <option>Otro</option>
-            </select>
+        <button class="svc-card-btn btn-outline-ink" onclick="document.getElementById('contact-form-section').classList.add('visible'); setTimeout(()=>document.getElementById('form-dedicado').scrollIntoView({behavior:'smooth'}),50)">
+          Solicitar cotización →
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Formulario para servicio dedicado (se revela al picar) -->
+    <div class="contact-form-section" id="contact-form-section">
+      <div class="contact-grid">
+        <div class="contact-info">
+          <h3>Atención directa,<br>sin intermediarios</h3>
+          <p>En RGT hablas con quien decide. Nuestro equipo en Monterrey está disponible para atenderte de inmediato.</p>
+          <div class="c-rows">
+            <div class="c-row">
+              <div class="c-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1A4FD6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></div>
+              <div><strong>Sede principal</strong><span>Av. Bonifacio Salinas Leal 153, San Nicolás de los Garza, N.L.</span></div>
+            </div>
+            <div class="c-row">
+              <div class="c-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1A4FD6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.87a16 16 0 0 0 6.07 6.07l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.9 16.9z"/></svg></div>
+              <div><strong>Teléfono</strong><span>81 1339 1597</span></div>
+            </div>
+            <div class="c-row">
+              <div class="c-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1A4FD6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+              <div><strong>Correo</strong><span>ventas@rgttransport.com</span></div>
+            </div>
           </div>
         </div>
-        <div class="fld"><label>Cuéntanos tu necesidad</label><textarea placeholder="Ruta, tipo de carga, frecuencia, volumen..."></textarea></div>
-        <button class="form-cta" id="form-btn">Enviar solicitud</button>
+        <div class="form-box" id="form-dedicado">
+          <div class="form-row">
+            <div class="fld"><label>Nombre</label><input type="text" placeholder="Tu nombre"></div>
+            <div class="fld"><label>Empresa</label><input type="text" placeholder="Nombre de la empresa"></div>
+          </div>
+          <div class="fld"><label>Correo electrónico</label><input type="email" placeholder="correo@empresa.com"></div>
+          <div class="form-row">
+            <div class="fld"><label>Teléfono</label><input type="tel" placeholder="+52 (81) ___-____"></div>
+            <div class="fld"><label>Tipo de servicio</label>
+              <select>
+                <option value="">Selecciona...</option>
+                <option>Sistema de Renta</option>
+                <option>Equipo Dedicado</option>
+                <option>Sistema por Viaje</option>
+                <option>Carga refrigerada</option>
+                <option>Otro</option>
+              </select>
+            </div>
+          </div>
+          <div class="fld"><label>Cuéntanos tu necesidad</label><textarea placeholder="Ruta, tipo de carga, frecuencia, volumen..."></textarea></div>
+          <button class="form-cta" id="form-btn">Enviar solicitud</button>
+        </div>
       </div>
     </div>
+
   </div>
 </section>
 
