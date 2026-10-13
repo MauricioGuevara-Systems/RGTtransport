@@ -85,7 +85,7 @@ a { text-decoration:none; color:inherit }
   background-position:center 35%;
   opacity:0; transition:opacity 1s ease;
 }
-.hero-bg.loaded { opacity:0.55 }
+.hero-bg.loaded { opacity:0.72 }
 .hero-vignette {
   position:absolute; inset:0;
   background:
@@ -267,16 +267,15 @@ a { text-decoration:none; color:inherit }
 }
 .quot-price-tag {
   font-size:10.5px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase;
-  color:#6EA3FF; margin-bottom:10px; display:block;
+  color:#6EA3FF; margin-bottom:12px; display:block;
 }
-.quot-price {
+.quot-summary-line {
   font-family:'DM Serif Display', serif;
-  font-size:52px; color:#fff; line-height:1;
-  letter-spacing:-0.02em; margin-bottom:6px;
+  font-size:22px; color:#fff; line-height:1.3;
+  letter-spacing:-0.01em; margin-bottom:10px;
 }
-.quot-price sup { font-size:22px; vertical-align:super; letter-spacing:0 }
-.quot-per-tarima {
-  font-size:13px; color:rgba(255,255,255,0.35);
+.quot-cta-note {
+  font-size:13px; color:rgba(255,255,255,0.4); line-height:1.6;
 }
 .quot-other-msg {
   display:none;
@@ -471,7 +470,7 @@ a { text-decoration:none; color:inherit }
     <div class="quot-left rv">
       <div class="quot-label">Cotizador</div>
       <h2>Calcula tu envío<br>al instante</h2>
-      <p>Elige destino, número de tarimas y te mostramos el precio. Un clic y ya tienes todo listo para enviarnos por WhatsApp.</p>
+      <p>Elige destino y número de tarimas. Con un clic tienes tu solicitud lista para enviarnos por WhatsApp y recibir el precio en minutos.</p>
 
       <!-- Tabs -->
       <div class="tab-row">
@@ -565,9 +564,9 @@ a { text-decoration:none; color:inherit }
         <div class="quot-route">Monterrey, N.L.<br><span>→</span> Chihuahua, Chih.</div>
         <div class="quot-tarimas-label" id="tarimas-label">1 tarima</div>
         <div class="quot-price-block">
-          <span class="quot-price-tag">Total estimado</span>
-          <div class="quot-price" id="price-display"><sup>$</sup><span id="price-num">18,900</span></div>
-          <div class="quot-per-tarima" id="per-tarima-label">$18,900 por tarima</div>
+          <span class="quot-price-tag">Tu solicitud</span>
+          <div class="quot-summary-line" id="summary-line">1 tarima · Monterrey → Chihuahua</div>
+          <div class="quot-cta-note">El precio lo recibes por WhatsApp en minutos.</div>
         </div>
         <div class="quot-divider"></div>
         <ul class="quot-includes">
@@ -623,7 +622,7 @@ a { text-decoration:none; color:inherit }
       <div class="step rv">
         <div class="step-ghost">1</div>
         <h3>Cotiza en línea</h3>
-        <p>Elige tu destino y número de tarimas. El precio aparece al instante, sin tener que hablar con nadie primero.</p>
+        <p>Elige tu destino y número de tarimas. En segundos tienes tu resumen listo para enviarnos por WhatsApp.</p>
       </div>
       <div class="step rv">
         <div class="step-ghost">2</div>
@@ -645,7 +644,7 @@ a { text-decoration:none; color:inherit }
   <p class="rv">Cotiza hoy y asegura tu lugar en la próxima salida. Cupo limitado a 14 tarimas.</p>
   <div class="cta-btns rv">
     <button class="btn-white" onclick="document.getElementById('cotizador').scrollIntoView({behavior:'smooth'})">Cotizar ahora</button>
-    <a class="btn-ghost" href="https://wa.me/528112081508?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20carga%20consolidada" target="_blank">Hablar por WhatsApp</a>
+    <a class="btn-white" href="https://wa.me/528112081508?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20carga%20consolidada" target="_blank">Hablar por WhatsApp</a>
   </div>
 </section>
 
@@ -662,8 +661,6 @@ a { text-decoration:none; color:inherit }
 
 <script>
 // ── CONFIG ────────────────────────────────────────────────
-// Para cambiar precio: edita PRECIO_POR_TARIMA
-const PRECIO_POR_TARIMA = 18900; // MXN por tarima MTY → Chihuahua
 const WA_NUMBER = '528112081508';
 const MAX_TARIMAS = 14;
 
@@ -696,27 +693,23 @@ function changeTarima(delta) {
 }
 
 function updatePrice() {
-  const total = tarimas * PRECIO_POR_TARIMA;
-  const fmt = (n) => n.toLocaleString('es-MX');
-  document.getElementById('price-num').textContent = fmt(total);
-  document.getElementById('tarimas-label').textContent = tarimas === 1 ? '1 tarima' : `${tarimas} tarimas`;
-  document.getElementById('per-tarima-label').textContent = `$${fmt(PRECIO_POR_TARIMA)} por tarima`;
+  const t = tarimas === 1 ? '1 tarima' : `${tarimas} tarimas`;
+  document.getElementById('tarimas-label').textContent = t;
+  document.getElementById('summary-line').textContent = `${t} · Monterrey → Chihuahua`;
 }
 
 // ── WHATSAPP CHIHUAHUA ────────────────────────────────────
 function sendWA() {
   const nombre  = document.getElementById('chih-nombre').value.trim();
   const empresa = document.getElementById('chih-empresa').value.trim();
-  const total   = (tarimas * PRECIO_POR_TARIMA).toLocaleString('es-MX');
   const t = tarimas === 1 ? '1 tarima' : `${tarimas} tarimas`;
 
-  let msg = `Hola RGT Transport, quiero apartar espacio en carga consolidada:\n\n`;
+  let msg = `Hola RGT Transport, quiero cotizar carga consolidada:\n\n`;
   msg += `📦 Ruta: Monterrey → Chihuahua\n`;
   msg += `📐 Tarimas: ${t}\n`;
-  msg += `💰 Total estimado: $${total} MXN\n`;
   if (nombre)  msg += `👤 Nombre: ${nombre}\n`;
   if (empresa) msg += `🏢 Empresa: ${empresa}\n`;
-  msg += `\nPor favor confírmenme disponibilidad.`;
+  msg += `\n¿Cuál es el precio y la próxima salida disponible?`;
 
   window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
 }
