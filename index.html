@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RGT Transport — Tu carga, nuestro encargo.</title>
-<link rel="preload" as="image" href="hero.jpeg">
+<link rel="preload" as="image" href="img/c-cerro.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
@@ -13,20 +13,18 @@
 /* ─── TOKENS ──────────────────────────────────────────── */
 :root {
   --navy:    #060E1C;
-  --navy2:   #0B1526;
+  --navy2:   #0C1829;
   --blue:    #1A4FD6;
   --blue2:   #2563EB;
-  --blue3:   #1E40AF;
   --ice:     #EFF4FF;
   --steel:   #7B9CC4;
-  --gold:    #6EA3FF;
   --mist:    rgba(255,255,255,0.06);
   --border:  rgba(255,255,255,0.09);
   --white:   #FFFFFF;
-  --off:     #F4F6FA;
+  --off:     #F8FAFC;
   --ink:     #0F172A;
   --slate:   #64748B;
-  --line:    #E1E7F0;
+  --line:    #E2E8F0;
 }
 
 /* ─── RESET ──────────────────────────────────────────── */
@@ -46,36 +44,33 @@ a { text-decoration:none; color:inherit }
 /* ─── NAV ────────────────────────────────────────────── */
 .nav {
   position:fixed; top:0; left:0; right:0; z-index:999;
-  height:68px;
+  height:72px;
   display:flex; align-items:center; justify-content:space-between;
-  padding:0 64px;
-  background:rgba(6,14,28,0.72);
-  backdrop-filter:blur(28px) saturate(200%);
-  -webkit-backdrop-filter:blur(28px) saturate(200%);
-  border-bottom:1px solid rgba(255,255,255,0.07);
-  transition:background 0.5s, border-color 0.5s;
+  padding:0 60px;
+  background:rgba(6,14,28,0.75);
+  backdrop-filter:blur(24px) saturate(180%);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);
+  border-bottom:1px solid var(--border);
+  transition:background 0.4s;
 }
-.nav.scrolled {
-  background:rgba(6,14,28,0.97);
-  border-bottom-color:rgba(255,255,255,0.1);
-}
-.nav-logo img { height:36px; filter:brightness(0) invert(1); opacity:0.9 }
-.nav-links { display:flex; gap:40px; list-style:none }
+.nav.scrolled { background:rgba(6,14,28,0.96) }
+.nav-logo img { height:38px; filter:brightness(0) invert(1); opacity:0.95 }
+.nav-links { display:flex; gap:36px; list-style:none }
 .nav-links a {
-  font-size:13px; font-weight:500; letter-spacing:0.025em;
-  color:rgba(255,255,255,0.5);
+  font-size:13.5px; font-weight:500; letter-spacing:0.02em;
+  color:rgba(255,255,255,0.6);
   transition:color 0.2s;
 }
-.nav-links a:hover { color:rgba(255,255,255,0.9) }
+.nav-links a:hover { color:#fff }
 .nav-btn {
-  height:38px; padding:0 20px;
-  background:rgba(26,79,214,0.9); color:#fff;
-  border:none; border-radius:7px;
-  font-size:13px; font-weight:600; letter-spacing:0.025em;
-  transition:background 0.2s, transform 0.15s, box-shadow 0.2s;
-  box-shadow:0 2px 16px rgba(26,79,214,0.35);
+  height:40px; padding:0 22px;
+  background:var(--blue); color:#fff;
+  border:none; border-radius:8px;
+  font-size:13.5px; font-weight:600; letter-spacing:0.02em;
+  transition:background 0.2s, transform 0.15s;
+  box-shadow: 0 2px 12px rgba(26,79,214,0.4);
 }
-.nav-btn:hover { background:var(--blue2); transform:translateY(-1px); box-shadow:0 4px 20px rgba(26,79,214,0.5) }
+.nav-btn:hover { background:var(--blue2); transform:translateY(-1px) }
 
 /* ─── HERO ───────────────────────────────────────────── */
 .hero {
@@ -85,135 +80,125 @@ a { text-decoration:none; color:inherit }
 }
 .hero-bg {
   position:absolute; inset:0;
-  background-image:url('hero.jpeg');
-  background-size:cover;
-  background-position:center 40%;
-  opacity:0; transition:opacity 1s ease;
+  background-image:url('img/c-cerro.jpg');
+  background-size:cover; background-position:center 35%;
+  opacity:0; transition:opacity 0.9s ease;
 }
-.hero-bg.loaded { opacity:0.58 }
+.hero-bg.loaded { opacity:0.32 }
 .hero-vignette {
   position:absolute; inset:0;
   background:
-    linear-gradient(90deg, rgba(6,14,28,0.88) 0%, rgba(6,14,28,0.50) 55%, rgba(6,14,28,0.15) 100%),
-    linear-gradient(to top, rgba(6,14,28,0.90) 0%, transparent 45%);
-}
-/* subtle grid overlay like cotizar */
-.hero::after {
-  content:''; position:absolute; inset:0; z-index:1;
-  background-image:
-    linear-gradient(rgba(255,255,255,0.016) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.016) 1px, transparent 1px);
-  background-size:80px 80px;
-  pointer-events:none;
+    linear-gradient(90deg, rgba(6,14,28,0.92) 0%, rgba(6,14,28,0.6) 55%, rgba(6,14,28,0.2) 100%),
+    linear-gradient(to top, rgba(6,14,28,1) 0%, transparent 40%);
 }
 .hero-wrap {
   position:relative; z-index:2;
   width:100%; max-width:1280px; margin:0 auto;
-  padding:148px 64px 108px;
+  padding:120px 60px 100px;
   display:grid; grid-template-columns:1fr auto;
   gap:60px; align-items:center;
 }
-.hero-left { max-width:640px }
+.hero-left { max-width:620px }
 
-.hero-eyebrow {
-  display:inline-flex; align-items:center; gap:12px;
-  margin-bottom:32px;
-  opacity:0; transform:translateY(10px);
-  animation:up 0.6s 0.3s forwards;
+.hero-tag {
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:11px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase;
+  color:var(--steel); margin-bottom:32px;
+  opacity:0; transform:translateY(12px);
+  animation:up 0.7s 0.4s forwards;
 }
-.hero-eyebrow-line { width:32px; height:1px; background:var(--gold); flex-shrink:0 }
-.hero-eyebrow span {
-  font-size:10.5px; font-weight:700; letter-spacing:0.22em;
-  text-transform:uppercase; color:var(--gold);
+.hero-tag::before {
+  content:''; display:block;
+  width:28px; height:1px; background:var(--steel);
 }
 
 .hero h1 {
   font-family:'DM Serif Display', Georgia, serif;
-  font-size:clamp(46px, 6vw, 76px);
-  font-weight:400; line-height:1.05;
-  color:#fff; letter-spacing:-0.025em;
+  font-size:clamp(48px, 6vw, 78px);
+  font-weight:400; line-height:1.06;
+  color:#fff; letter-spacing:-0.02em;
   margin-bottom:28px;
   opacity:0; transform:translateY(16px);
-  animation:up 0.8s 0.5s forwards;
+  animation:up 0.8s 0.6s forwards;
 }
 .hero h1 em {
   font-style:italic;
   color:transparent;
-  -webkit-text-stroke:1px rgba(255,255,255,0.65);
+  -webkit-text-stroke:1px rgba(255,255,255,0.7);
 }
 
 .hero-desc {
-  font-size:17px; font-weight:300; line-height:1.8;
-  color:rgba(255,255,255,0.50);
+  font-size:17px; font-weight:300; line-height:1.75;
+  color:rgba(255,255,255,0.55);
   margin-bottom:16px; max-width:480px;
   opacity:0; transform:translateY(12px);
-  animation:up 0.7s 0.7s forwards;
+  animation:up 0.7s 0.8s forwards;
 }
 .hero-slogan {
   font-family:'DM Serif Display', serif;
-  font-size:19px; font-style:italic;
-  color:rgba(255,255,255,0.75);
+  font-size:20px; font-style:italic;
+  color:rgba(255,255,255,0.8);
   margin-bottom:44px;
   opacity:0; transform:translateY(12px);
-  animation:up 0.7s 0.85s forwards;
+  animation:up 0.7s 0.95s forwards;
 }
 
 .hero-btns {
   display:flex; gap:14px;
   opacity:0; transform:translateY(12px);
-  animation:up 0.7s 1.0s forwards;
+  animation:up 0.7s 1.1s forwards;
 }
 .btn-solid {
-  height:50px; padding:0 30px;
-  background:var(--blue); color:#fff; border:none; border-radius:9px;
-  font-size:14px; font-weight:600; letter-spacing:0.025em;
+  height:50px; padding:0 32px;
+  background:var(--blue); color:#fff; border:none; border-radius:10px;
+  font-size:14px; font-weight:600; letter-spacing:0.02em;
   box-shadow:0 4px 24px rgba(26,79,214,0.45);
   transition:background 0.2s, transform 0.15s, box-shadow 0.2s;
 }
 .btn-solid:hover { background:var(--blue2); transform:translateY(-2px); box-shadow:0 8px 32px rgba(26,79,214,0.55) }
 .btn-outline {
-  height:50px; padding:0 30px;
-  background:transparent; color:rgba(255,255,255,0.65);
-  border:1px solid rgba(255,255,255,0.18); border-radius:9px;
+  height:50px; padding:0 32px;
+  background:transparent; color:rgba(255,255,255,0.7);
+  border:1px solid rgba(255,255,255,0.2); border-radius:10px;
   font-size:14px; font-weight:500;
   transition:all 0.2s;
 }
-.btn-outline:hover { border-color:rgba(255,255,255,0.45); color:#fff }
+.btn-outline:hover { border-color:rgba(255,255,255,0.5); color:#fff }
 
 .hero-logo-right {
   opacity:0; transform:translateX(20px);
-  animation:right 0.9s 1.1s forwards;
+  animation:right 0.9s 1.2s forwards;
   display:flex; align-items:center; justify-content:center;
 }
 .hero-logo-right img {
-  width:220px; filter:brightness(0) invert(1); opacity:0.12;
+  width:240px; filter:brightness(0) invert(1); opacity:0.18;
 }
 
 /* ─── STATS ──────────────────────────────────────────── */
 .stats {
   contain:layout;
   background:var(--navy2);
-  border-top:1px solid rgba(255,255,255,0.06);
-  border-bottom:1px solid rgba(255,255,255,0.06);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
   display:grid; grid-template-columns:repeat(4,1fr);
 }
 .stat {
-  padding:40px 24px; text-align:center;
-  border-right:1px solid rgba(255,255,255,0.06);
+  padding:36px 24px; text-align:center;
+  border-right:1px solid var(--border);
   transition:background 0.2s;
 }
 .stat:last-child { border-right:none }
 .stat:hover { background:rgba(255,255,255,0.03) }
 .stat-n {
   font-family:'DM Serif Display', serif;
-  font-size:44px; color:#fff; line-height:1; margin-bottom:10px;
-  letter-spacing:-0.025em;
+  font-size:40px; color:#fff; line-height:1; margin-bottom:8px;
+  letter-spacing:-0.02em;
 }
-.stat-n sup { font-size:18px; vertical-align:super; color:var(--gold); letter-spacing:0.05em }
-.stat-l { font-size:10.5px; font-weight:600; letter-spacing:0.16em; text-transform:uppercase; color:var(--steel) }
+.stat-n sup { font-size:20px; vertical-align:super; color:var(--blue2) }
+.stat-l { font-size:11px; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; color:var(--steel) }
 
 /* ─── SECTION SHELL ──────────────────────────────────── */
-.s { padding:96px 64px }
+.s { padding:100px 60px }
 .s-dark  { background:var(--navy) }
 .s-dark2 { background:var(--navy2) }
 .s-light { background:var(--off) }
@@ -222,230 +207,167 @@ a { text-decoration:none; color:inherit }
 
 .s-label {
   display:inline-flex; align-items:center; gap:10px;
-  font-size:10.5px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase;
-  color:var(--blue2); margin-bottom:16px;
+  font-size:11px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase;
+  color:var(--blue2); margin-bottom:14px;
 }
-.s-label::before { content:''; display:block; width:24px; height:1px; background:var(--blue2) }
+.s-label::before { content:''; display:block; width:20px; height:1px; background:var(--blue2) }
 
-.s-dark  .s-label { color:var(--gold) }
-.s-dark  .s-label::before { background:var(--gold) }
-.s-dark2 .s-label { color:var(--gold) }
-.s-dark2 .s-label::before { background:var(--gold) }
+.s-dark  .s-label { color:#6EA3FF }
+.s-dark  .s-label::before { background:#6EA3FF }
+.s-dark2 .s-label { color:#6EA3FF }
+.s-dark2 .s-label::before { background:#6EA3FF }
 
 h2 {
   font-family:'DM Serif Display', serif;
-  font-size:clamp(32px,3.5vw,48px);
-  font-weight:400; letter-spacing:-0.022em;
-  line-height:1.08; color:var(--ink); margin-bottom:14px;
+  font-size:clamp(32px,3.5vw,46px);
+  font-weight:400; letter-spacing:-0.02em;
+  line-height:1.1; color:var(--ink); margin-bottom:14px;
 }
 .s-dark h2, .s-dark2 h2 { color:#fff }
 
 .s-sub {
-  font-size:15.5px; font-weight:300; line-height:1.8;
+  font-size:16px; font-weight:300; line-height:1.75;
   color:var(--slate); max-width:500px; margin-bottom:56px;
 }
-.s-dark .s-sub, .s-dark2 .s-sub { color:rgba(255,255,255,0.38) }
+.s-dark .s-sub, .s-dark2 .s-sub { color:rgba(255,255,255,0.4) }
 
 /* ─── SERVICES ───────────────────────────────────────── */
-.srv-grid {
-  display:grid; grid-template-columns:repeat(4,1fr);
-  gap:2px; background:var(--line);
-  border-radius:16px; overflow:hidden;
-  box-shadow:0 4px 40px rgba(15,23,42,0.06);
-}
+.srv-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line) }
 .srv-card {
-  background:var(--white); padding:38px 30px 34px;
-  transition:background 0.2s, border-top-color 0.2s;
-  border-top:3px solid transparent;
+  background:var(--white); padding:36px 28px 32px;
+  transition:background 0.2s;
+  border-top:2px solid transparent;
 }
 .s-light .srv-card { background:var(--off) }
 .srv-card:hover { background:var(--white); border-top-color:var(--blue) }
 .srv-ico {
-  width:46px; height:46px; margin-bottom:20px;
+  width:48px; height:48px; margin-bottom:20px;
   display:flex; align-items:center; justify-content:center;
-  background:var(--ice); border-radius:11px;
+  background:var(--ice); border-radius:12px;
 }
 .srv-chip {
   display:inline-block; margin-bottom:12px;
-  font-size:9.5px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase;
-  color:var(--blue); background:var(--ice); border-radius:4px; padding:3px 9px;
+  font-size:10px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase;
+  color:var(--blue); background:var(--ice); border-radius:4px; padding:3px 8px;
 }
 .srv-card h3 { font-size:16px; font-weight:600; color:var(--ink); margin-bottom:10px }
-.srv-card p  { font-size:13.5px; font-weight:300; color:var(--slate); line-height:1.75 }
+.srv-card p  { font-size:14px; font-weight:300; color:var(--slate); line-height:1.7 }
 
 /* ─── GALLERY ────────────────────────────────────────── */
 .gallery {
   display:grid;
-  grid-template-columns:1.45fr 1fr;
-  grid-template-rows:480px;
+  grid-template-columns:1.4fr 1fr;
+  grid-template-rows:280px 180px;
   gap:3px;
   background:var(--navy);
 }
-.gal-a { position:relative; overflow:hidden }
-.gal-b { overflow:hidden; position:relative }
-.gal-c { display:none }
+.gal-a { grid-row:1/3; position:relative; overflow:hidden }
+.gal-b, .gal-c { overflow:hidden; position:relative }
 .gal-fill {
   position:absolute; inset:0;
   background-size:cover; background-position:center;
-  transition:transform 0.5s ease;
+  transition:transform 0.3s ease;
 }
 .gal-a:hover .gal-fill,
 .gal-b:hover .gal-fill,
-.gal-c:hover .gal-fill { transform:scale(1.05) }
+.gal-c:hover .gal-fill { transform:scale(1.04) }
 .gal-cap {
   position:absolute; bottom:0; left:0; right:0;
-  padding:28px 24px 24px;
-  background:linear-gradient(to top, rgba(6,14,28,0.88) 0%, transparent 100%);
+  padding:24px;
+  background:linear-gradient(to top, rgba(6,14,28,0.85) 0%, transparent 100%);
 }
-.gal-cap strong { font-size:13px; font-weight:600; color:#fff; display:block; margin-bottom:3px }
-.gal-cap span   { font-size:11px; color:var(--steel); letter-spacing:0.04em }
+.gal-cap strong { font-size:13px; font-weight:600; color:#fff; display:block }
+.gal-cap span   { font-size:11px; color:var(--steel) }
 
 /* ─── MODALIDADES ────────────────────────────────────── */
 .mod-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:20px }
 .mod-card {
-  border:1px solid rgba(255,255,255,0.08); border-radius:18px; padding:36px 30px;
+  border:1px solid var(--border); border-radius:16px; padding:32px 28px;
   position:relative; overflow:hidden;
-  transition:border-color 0.25s, background 0.25s, transform 0.25s;
+  transition:border-color 0.25s, background 0.25s;
   background:rgba(255,255,255,0.03);
 }
-.mod-card:hover { border-color:rgba(37,99,235,0.45); background:rgba(255,255,255,0.05); transform:translateY(-2px) }
+.mod-card:hover { border-color:rgba(37,99,235,0.5); background:rgba(255,255,255,0.05) }
 .mod-n {
   font-family:'DM Serif Display', serif;
-  font-size:90px; font-weight:400;
-  color:rgba(255,255,255,0.04);
-  position:absolute; top:8px; right:16px;
+  font-size:80px; font-weight:400;
+  color:rgba(255,255,255,0.05);
+  position:absolute; top:12px; right:20px;
   line-height:1; letter-spacing:-0.04em;
   pointer-events:none;
 }
 .mod-card h3 { font-size:18px; font-weight:600; color:#fff; margin-bottom:12px }
-.mod-card p  { font-size:14px; font-weight:300; color:rgba(255,255,255,0.42); line-height:1.8; margin-bottom:22px }
+.mod-card p  { font-size:14px; font-weight:300; color:rgba(255,255,255,0.45); line-height:1.75; margin-bottom:20px }
 .mod-benefit {
-  background:rgba(6,14,28,0.55); border-radius:10px; padding:16px 18px;
-  border-left:2px solid rgba(110,163,255,0.5);
+  background:rgba(6,14,28,0.6); border-radius:8px; padding:16px;
+  border-left:2px solid var(--blue2);
 }
 .mod-benefit strong {
   display:block; margin-bottom:5px;
-  font-size:9px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold);
+  font-size:9.5px; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:#6EA3FF;
 }
-.mod-benefit p { font-size:13px; color:rgba(255,255,255,0.32); margin-bottom:0; line-height:1.7 }
+.mod-benefit p { font-size:13px; color:rgba(255,255,255,0.35); margin-bottom:0 }
 
 .extras { display:grid; grid-template-columns:repeat(5,1fr); gap:10px }
 .extra {
   display:flex; align-items:center; gap:10px;
   padding:14px 16px; border-radius:10px;
-  border:1px solid rgba(255,255,255,0.07); background:rgba(255,255,255,0.025);
-  transition:border-color 0.2s, background 0.2s;
+  border:1px solid var(--border); background:rgba(255,255,255,0.03);
+  transition:border-color 0.2s;
 }
-.extra:hover { border-color:rgba(37,99,235,0.4); background:rgba(255,255,255,0.04) }
-.extra-dot { width:5px; height:5px; border-radius:50%; background:var(--gold); flex-shrink:0 }
-.extra span { font-size:12.5px; color:rgba(255,255,255,0.48); font-weight:400 }
+.extra:hover { border-color:rgba(37,99,235,0.4) }
+.extra-dot { width:6px; height:6px; border-radius:50%; background:var(--blue2); flex-shrink:0 }
+.extra span { font-size:12.5px; color:rgba(255,255,255,0.5); font-weight:400 }
 
 /* ─── CALIDAD ────────────────────────────────────────── */
 .cal-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px }
 .cal-card {
-  border:1px solid rgba(255,255,255,0.07); border-radius:16px; padding:32px 26px;
+  border:1px solid var(--border); border-radius:14px; padding:28px 24px;
   background:rgba(255,255,255,0.03);
-  transition:border-color 0.25s, transform 0.25s, background 0.25s;
+  transition:border-color 0.2s, transform 0.2s;
 }
-.cal-card:hover { border-color:rgba(110,163,255,0.3); transform:translateY(-3px); background:rgba(255,255,255,0.05) }
-.cal-ico { margin-bottom:18px }
+.cal-card:hover { border-color:rgba(37,99,235,0.4); transform:translateY(-2px) }
+.cal-ico { margin-bottom:16px }
 .cal-card h3 { font-size:15px; font-weight:600; color:#fff; margin-bottom:10px }
-.cal-card p  { font-size:13.5px; font-weight:300; color:rgba(255,255,255,0.38); line-height:1.75 }
+.cal-card p  { font-size:13.5px; font-weight:300; color:rgba(255,255,255,0.4); line-height:1.7 }
 
 /* ─── MISIÓN VISIÓN ──────────────────────────────────── */
 .mv-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:24px }
-.mv-card { border-radius:18px; padding:40px }
-.mv-mision {
-  background:linear-gradient(135deg, var(--blue3) 0%, var(--blue) 100%);
-  box-shadow:0 8px 40px rgba(26,79,214,0.3);
-}
-.mv-vision { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08) }
+.mv-card { border-radius:16px; padding:36px }
+.mv-mision { background:var(--blue) }
+.mv-vision { background:rgba(255,255,255,0.04); border:1px solid var(--border) }
 .mv-label {
-  font-size:9.5px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase;
-  margin-bottom:18px; display:block;
+  font-size:10px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase;
+  margin-bottom:16px; display:block;
 }
-.mv-mision .mv-label { color:rgba(255,255,255,0.5) }
-.mv-vision .mv-label { color:var(--gold) }
-.mv-card p { font-size:15px; font-weight:300; color:rgba(255,255,255,0.82); line-height:1.85 }
+.mv-mision .mv-label { color:rgba(255,255,255,0.55) }
+.mv-vision .mv-label { color:#6EA3FF }
+.mv-card p { font-size:15px; font-weight:300; color:rgba(255,255,255,0.85); line-height:1.8 }
 
 .vals { display:grid; grid-template-columns:repeat(4,1fr); gap:10px }
 .val {
   display:flex; align-items:center; gap:10px;
-  padding:16px 14px; border-radius:10px;
-  border:1px solid rgba(255,255,255,0.07); background:rgba(255,255,255,0.025);
-  transition:border-color 0.2s, background 0.2s;
+  padding:16px; border-radius:10px;
+  border:1px solid var(--border); background:rgba(255,255,255,0.03);
+  transition:border-color 0.2s;
 }
-.val:hover { border-color:rgba(110,163,255,0.3); background:rgba(255,255,255,0.045) }
-.val-dot { width:4px; height:4px; border-radius:50%; background:var(--gold); flex-shrink:0 }
-.val span { font-size:13.5px; color:rgba(255,255,255,0.7); font-weight:400 }
+.val:hover { border-color:rgba(37,99,235,0.3) }
+.val-dot { width:5px; height:5px; border-radius:50%; background:var(--blue2); flex-shrink:0 }
+.val span { font-size:13.5px; color:rgba(255,255,255,0.75); font-weight:400 }
 
 /* ─── COBERTURA ──────────────────────────────────────── */
 .cob-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:8px }
 .cob {
-  padding:12px 14px; border-radius:9px;
-  border:1px solid rgba(255,255,255,0.07); background:rgba(255,255,255,0.025);
-  font-size:12.5px; color:rgba(255,255,255,0.45);
-  display:flex; align-items:center; gap:8px;
-  transition:border-color 0.2s, color 0.2s, background 0.2s;
+  padding:11px 14px; border-radius:8px;
+  border:1px solid var(--border); background:rgba(255,255,255,0.03);
+  font-size:12.5px; color:rgba(255,255,255,0.5);
+  display:flex; align-items:center; gap:7px;
+  transition:border-color 0.2s, color 0.2s;
 }
-.cob:hover { border-color:rgba(110,163,255,0.35); color:rgba(255,255,255,0.82); background:rgba(255,255,255,0.045) }
-.cob-dot { width:4px; height:4px; border-radius:50%; background:var(--gold); flex-shrink:0 }
+.cob:hover { border-color:rgba(37,99,235,0.4); color:rgba(255,255,255,0.85) }
+.cob-dot { width:4px; height:4px; border-radius:50%; background:var(--blue2); flex-shrink:0 }
 
 /* ─── CONTACTO ───────────────────────────────────────── */
-/* Selector de servicio */
-.svc-selector {
-  display:grid; grid-template-columns:1fr 1fr; gap:16px;
-  margin-bottom:48px;
-}
-.svc-card {
-  border-radius:18px; padding:32px 28px;
-  border:2px solid var(--line); background:#fff;
-  position:relative; overflow:hidden;
-  transition:border-color 0.25s, box-shadow 0.25s, transform 0.2s;
-  cursor:default;
-}
-.svc-card:hover { border-color:var(--blue); box-shadow:0 8px 40px rgba(26,79,214,0.12); transform:translateY(-2px) }
-.svc-card-badge {
-  display:inline-block; margin-bottom:14px;
-  font-size:10px; font-weight:700; letter-spacing:0.15em; text-transform:uppercase;
-  padding:4px 10px; border-radius:4px;
-}
-.svc-card-badge.ltl { background:var(--ice); color:var(--blue) }
-.svc-card-badge.ftl { background:#F1F5F9; color:#475569 }
-.svc-card h3 { font-size:20px; font-weight:600; color:var(--ink); margin-bottom:8px }
-.svc-card p  { font-size:13.5px; font-weight:300; color:var(--slate); line-height:1.7; margin-bottom:22px }
-.svc-card-pills { display:flex; flex-wrap:wrap; gap:7px; margin-bottom:24px }
-.svc-pill {
-  font-size:11.5px; color:var(--slate); font-weight:400;
-  padding:5px 10px; border-radius:6px;
-  background:var(--off); border:1px solid var(--line);
-}
-.svc-card-btn {
-  width:100%; padding:13px;
-  border-radius:10px; border:none;
-  font-size:14px; font-weight:600; letter-spacing:0.02em;
-  transition:background 0.2s, transform 0.15s, box-shadow 0.2s;
-}
-.svc-card-btn.btn-blue {
-  background:var(--blue); color:#fff;
-  box-shadow:0 4px 20px rgba(26,79,214,0.35);
-}
-.svc-card-btn.btn-blue:hover { background:var(--blue2); transform:translateY(-1px); box-shadow:0 8px 28px rgba(26,79,214,0.45) }
-.svc-card-btn.btn-outline-ink {
-  background:transparent; color:var(--ink);
-  border:1.5px solid var(--line);
-}
-.svc-card-btn.btn-outline-ink:hover { border-color:var(--ink); background:var(--off) }
-.svc-card-sep {
-  height:1px; background:var(--line); margin:20px 0;
-}
-.svc-card-anchor {
-  font-size:12px; color:var(--blue); font-weight:500;
-  cursor:pointer; text-decoration:underline; text-underline-offset:2px;
-}
-.svc-card-anchor:hover { color:var(--blue2) }
-
-/* Divisor o texto entre las dos tarjetas */
 .contact-grid { display:grid; grid-template-columns:1fr 1.15fr; gap:64px; align-items:start }
 .contact-info h3 {
   font-family:'DM Serif Display', serif;
@@ -489,25 +411,17 @@ h2 {
 }
 .form-cta:hover { background:var(--blue2); transform:translateY(-1px); box-shadow:0 8px 28px rgba(26,79,214,0.45) }
 
-/* Contacto form oculto por defecto, se muestra al elegir servicio dedicado */
-.contact-form-section { display:none }
-.contact-form-section.visible { display:block }
-
-@media(max-width:900px) {
-  .svc-selector { grid-template-columns:1fr }
-}
-
 /* ─── FOOTER ─────────────────────────────────────────── */
 .footer {
-  background:#030A15;
+  background:#040B17;
   border-top:1px solid rgba(255,255,255,0.06);
-  padding:40px 64px;
+  padding:40px 60px;
   display:grid; grid-template-columns:1fr auto;
   gap:24px; align-items:center;
 }
-.footer-logo img { height:30px; filter:brightness(0) invert(1); opacity:0.4; margin-bottom:8px }
-.footer-copy { font-size:11.5px; color:rgba(255,255,255,0.22); letter-spacing:0.01em }
-.footer-right { text-align:right; font-size:12.5px; color:rgba(255,255,255,0.32); line-height:2 }
+.footer-logo img { height:32px; filter:brightness(0) invert(1); opacity:0.45; margin-bottom:8px }
+.footer-copy { font-size:12px; color:rgba(255,255,255,0.25) }
+.footer-right { text-align:right; font-size:12.5px; color:rgba(255,255,255,0.35); line-height:1.9 }
 
 /* ─── REVEAL ─────────────────────────────────────────── */
 .rv { opacity:0; transform:translateY(16px); transition:opacity 0.45s ease, transform 0.45s ease; will-change:opacity,transform }
@@ -531,16 +445,16 @@ h2 {
   .nav { padding:0 24px }
   .nav-links { display:none }
   .s { padding:64px 24px }
-  .hero-wrap { grid-template-columns:1fr; padding:120px 24px 72px }
+  .hero-wrap { grid-template-columns:1fr; padding:100px 24px 72px }
   .hero-logo-right { display:none }
   .hero h1 { font-size:42px }
   .hero-btns { flex-direction:column }
   .btn-solid, .btn-outline { width:100%; height:48px }
   .stats { grid-template-columns:1fr 1fr }
   .stat { border-right:none; border-bottom:1px solid var(--border) }
-  .gallery { grid-template-columns:1fr; grid-template-rows:260px 220px }
+  .gallery { grid-template-columns:1fr; grid-template-rows:260px 180px 180px }
   .gal-a { grid-row:auto }
-  .mod-grid { grid-template-columns:1fr !important }
+  .mod-grid { grid-template-columns:1fr }
   .mv-grid { grid-template-columns:1fr }
   .vals { grid-template-columns:1fr 1fr }
   .contact-grid { grid-template-columns:1fr }
@@ -574,15 +488,12 @@ h2 {
   <div class="hero-vignette"></div>
   <div class="hero-wrap">
     <div class="hero-left">
-      <div class="hero-eyebrow">
-        <div class="hero-eyebrow-line"></div>
-        <span>Autotransporte especializado · Norte y Centro del país</span>
-      </div>
+      <div class="hero-tag">Autotransporte especializado · Norte y Centro del país</div>
       <h1>27 años<br>moviendo <em>México</em><br>con precisión</h1>
       <p class="hero-desc">Empresa 100% mexicana fundada en Monterrey. Carga local y foránea con el cuidado, la puntualidad y la confiabilidad que tu operación exige.</p>
       <p class="hero-slogan">Tu carga, nuestro encargo.</p>
       <div class="hero-btns">
-        <button class="btn-solid" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">Cotizar mi envío ahora</button>
+        <button class="btn-solid" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">Solicitar cotización</button>
         <button class="btn-outline" onclick="document.getElementById('servicios').scrollIntoView({behavior:'smooth'})">Conocer más</button>
       </div>
     </div>
@@ -672,9 +583,9 @@ h2 {
 <section class="s s-dark" id="modalidades">
   <div class="wrap">
     <div class="rv"><div class="s-label">Modalidades</div></div>
-    <h2 class="rv">Cuatro formas de trabajar<br>con nosotros</h2>
+    <h2 class="rv">Tres formas de trabajar<br>con nosotros</h2>
     <p class="s-sub rv">Adaptamos el servicio a la estructura y necesidades de tu operación logística.</p>
-    <div class="mod-grid" style="grid-template-columns:repeat(2,1fr)">
+    <div class="mod-grid">
       <div class="mod-card rv">
         <div class="mod-n">1</div>
         <h3>Sistema de Renta</h3>
@@ -702,21 +613,12 @@ h2 {
           <p>Se entrega dentro de los horarios establecidos con reparto a la medida de tu operación.</p>
         </div>
       </div>
-      <div class="mod-card rv">
-        <div class="mod-n">4</div>
-        <h3>Carga Consolidada · LTL</h3>
-        <p>Comparte el espacio de un Torton 24" con otros embarcadores. Pagas solo las tarimas que usas, no el camión completo.</p>
-        <div class="mod-benefit">
-          <strong>Beneficio</strong>
-          <p>Ideal para envíos de 1 a 13 tarimas. Sin mínimos de volumen. Cotiza en minutos y recibe el precio por WhatsApp.</p>
-        </div>
-      </div>
     </div>
     <div class="extras rv">
-      <div class="extra"><div class="extra-dot"></div><span>GPS y monitoreo 24/7</span></div>
+      <div class="extra"><div class="extra-dot"></div><span>GPS SAMSARA 24/7</span></div>
       <div class="extra"><div class="extra-dot"></div><span>Graficador de temperatura</span></div>
       <div class="extra"><div class="extra-dot"></div><span>Rutas inteligentes</span></div>
-      <div class="extra"><div class="extra-dot"></div><span>Seguro de carga incluido</span></div>
+      <div class="extra"><div class="extra-dot"></div><span>Seguro de carga $650,000</span></div>
       <div class="extra"><div class="extra-dot"></div><span>Operadores con RCONTROL</span></div>
     </div>
   </div>
@@ -737,7 +639,7 @@ h2 {
       <div class="cal-card rv">
         <div class="cal-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6EA3FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
         <h3>Visibilidad total</h3>
-        <p>GPS y monitoreo en tiempo real. Sabes exactamente dónde está tu carga en todo momento, sin excepciones.</p>
+        <p>Rastreo SAMSARA en tiempo real. Sabes exactamente dónde está tu carga en todo momento, sin excepciones.</p>
       </div>
       <div class="cal-card rv">
         <div class="cal-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6EA3FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
@@ -823,92 +725,50 @@ h2 {
 <section class="s s-white" id="contacto">
   <div class="wrap">
     <div class="rv"><div class="s-label">Contacto</div></div>
-    <h2 class="rv">¿Qué tipo de servicio<br>necesitas?</h2>
-    <p class="s-sub rv">Elige la opción que mejor describe tu operación y te orientamos de inmediato.</p>
-
-    <!-- Selector de servicio -->
-    <div class="svc-selector rv">
-
-      <!-- Tarjeta 1: Carga Consolidada -->
-      <div class="svc-card">
-        <span class="svc-card-badge ltl">Carga Consolidada · LTL</span>
-        <h3>Envía desde 1 tarima</h3>
-        <p>No pagues la tarifa completa. Comparte el espacio de un Torton 24" con otros clientes y cotiza <strong>desde 1 tarima</strong>.</p>
-        <div class="svc-card-pills">
-          <span class="svc-pill">Desde 1 tarima</span>
-          <span class="svc-pill">Precio por WhatsApp</span>
-          <span class="svc-pill">Factura incluida</span>
-          <span class="svc-pill">Rastreo GPS 24/7</span>
+    <h2 class="rv">Hablemos de tu operación</h2>
+    <p class="s-sub rv">Cuéntanos qué necesitas y te respondemos con una propuesta a la medida de tu cadena de suministro.</p>
+    <div class="contact-grid">
+      <div class="contact-info rv">
+        <h3>Atención directa,<br>sin intermediarios</h3>
+        <p>En RGT hablas con quien decide. Nuestro equipo en Monterrey está disponible para atenderte de inmediato.</p>
+        <div class="c-rows">
+          <div class="c-row">
+            <div class="c-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1A4FD6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></div>
+            <div><strong>Sede principal</strong><span>Av. Bonifacio Salinas Leal 153, San Nicolás de los Garza, N.L.</span></div>
+          </div>
+          <div class="c-row">
+            <div class="c-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1A4FD6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.87a16 16 0 0 0 6.07 6.07l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.9 16.9z"/></svg></div>
+            <div><strong>Teléfono</strong><span>81 1339 1597</span></div>
+          </div>
+          <div class="c-row">
+            <div class="c-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1A4FD6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+            <div><strong>Correo</strong><span>ventas@rgttransport.com</span></div>
+          </div>
         </div>
-        <button class="svc-card-btn btn-blue" onclick="window.location.href='cotizar.html'">
-          Cotizar consolidado →
-        </button>
       </div>
-
-      <!-- Tarjeta 2: Servicio Completo / Dedicado -->
-      <div class="svc-card">
-        <span class="svc-card-badge ftl">Servicio Completo</span>
-        <h3>Camión dedicado o por viaje</h3>
-        <p>Unidad exclusiva para tu carga. Sistema de Renta, Equipo Dedicado o por Viaje. Cobertura nacional, refrigerado incluido.</p>
-        <div class="svc-card-pills">
-          <span class="svc-pill">Flota dedicada</span>
-          <span class="svc-pill">Carga refrigerada</span>
-          <span class="svc-pill">Cobertura nacional</span>
-          <span class="svc-pill">Renta mensual</span>
+      <div class="form-box rv">
+        <div class="form-row">
+          <div class="fld"><label>Nombre</label><input type="text" placeholder="Tu nombre"></div>
+          <div class="fld"><label>Empresa</label><input type="text" placeholder="Nombre de la empresa"></div>
         </div>
-        <button class="svc-card-btn btn-outline-ink" onclick="document.getElementById('contact-form-section').classList.add('visible'); setTimeout(()=>document.getElementById('form-dedicado').scrollIntoView({behavior:'smooth'}),50)">
-          Solicitar cotización →
-        </button>
-      </div>
-
-    </div>
-
-    <!-- Formulario para servicio dedicado (se revela al picar) -->
-    <div class="contact-form-section" id="contact-form-section">
-      <div class="contact-grid">
-        <div class="contact-info">
-          <h3>Atención directa,<br>sin intermediarios</h3>
-          <p>En RGT hablas con quien decide. Nuestro equipo en Monterrey está disponible para atenderte de inmediato.</p>
-          <div class="c-rows">
-            <div class="c-row">
-              <div class="c-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1A4FD6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></div>
-              <div><strong>Sede principal</strong><span>Av. Bonifacio Salinas Leal 153, San Nicolás de los Garza, N.L.</span></div>
-            </div>
-            <div class="c-row">
-              <div class="c-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1A4FD6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.87a16 16 0 0 0 6.07 6.07l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.9 16.9z"/></svg></div>
-              <div><strong>Teléfono</strong><span>81 1339 1597</span></div>
-            </div>
-            <div class="c-row">
-              <div class="c-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1A4FD6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-              <div><strong>Correo</strong><span>ventas@rgttransport.com</span></div>
-            </div>
+        <div class="fld"><label>Correo electrónico</label><input type="email" placeholder="correo@empresa.com"></div>
+        <div class="form-row">
+          <div class="fld"><label>Teléfono</label><input type="tel" placeholder="+52 (81) ___-____"></div>
+          <div class="fld"><label>Tipo de servicio</label>
+            <select>
+              <option value="">Selecciona...</option>
+              <option>Sistema de Renta</option>
+              <option>Equipo Dedicado</option>
+              <option>Sistema por Viaje</option>
+              <option>Carga refrigerada</option>
+              <option>Otro</option>
+            </select>
           </div>
         </div>
-        <div class="form-box" id="form-dedicado">
-          <div class="form-row">
-            <div class="fld"><label>Nombre</label><input type="text" placeholder="Tu nombre"></div>
-            <div class="fld"><label>Empresa</label><input type="text" placeholder="Nombre de la empresa"></div>
-          </div>
-          <div class="fld"><label>Correo electrónico</label><input type="email" placeholder="correo@empresa.com"></div>
-          <div class="form-row">
-            <div class="fld"><label>Teléfono</label><input type="tel" placeholder="+52 (81) ___-____"></div>
-            <div class="fld"><label>Tipo de servicio</label>
-              <select>
-                <option value="">Selecciona...</option>
-                <option>Sistema de Renta</option>
-                <option>Equipo Dedicado</option>
-                <option>Sistema por Viaje</option>
-                <option>Carga refrigerada</option>
-                <option>Otro</option>
-              </select>
-            </div>
-          </div>
-          <div class="fld"><label>Cuéntanos tu necesidad</label><textarea placeholder="Ruta, tipo de carga, frecuencia, volumen..."></textarea></div>
-          <button class="form-cta" id="form-btn">Enviar solicitud</button>
-        </div>
+        <div class="fld"><label>Cuéntanos tu necesidad</label><textarea placeholder="Ruta, tipo de carga, frecuencia, volumen..."></textarea></div>
+        <button class="form-cta" id="form-btn">Enviar solicitud</button>
       </div>
     </div>
-
   </div>
 </section>
 
@@ -927,17 +787,12 @@ h2 {
 <script>
 // ── IMAGES ──────────────────────────────────────────────
 const heroBg = document.getElementById('hero-bg');
-heroBg.style.backgroundImage = "url('hero.jpeg')";
-// Torton lateral con Cerro de la Silla - posición centrada para mostrar el cerro
-heroBg.style.backgroundPosition = "center 45%";
+heroBg.style.backgroundImage = "url('img/c-cerro.jpg')";
 setTimeout(() => heroBg.classList.add('loaded'), 50);
 
-// gallery-a: interior de caja refrigerada - centrado perfecto
-document.getElementById('gal-a').style.cssText += "background-image:url('gallery1.jpeg');background-position:center center;";
-// gallery-b: dos camiones trasera
-document.getElementById('gal-b').style.cssText += "background-image:url('gallery2.jpeg');background-position:center 50%;";
-// gallery-c: cabina con logo RGT - ángulo desde abajo con cielo azul
-document.getElementById('gal-c').style.cssText += "background-image:url('gallery3.png');background-position:center 35%;";
+document.getElementById('gal-a').style.cssText += "background-image:url('img/c-cabina.png');background-position:center 55%;";
+document.getElementById('gal-b').style.cssText += "background-image:url('img/c-interior.jpg');background-position:center 45%;";
+document.getElementById('gal-c').style.cssText += "background-image:url('img/c-atardecer.jpg');background-position:center 40%;";
 
 // ── NAV SCROLL ───────────────────────────────────────────
 window.addEventListener('scroll', () => {
@@ -968,25 +823,23 @@ const saveLead = (l) => {
   return leads.length;
 };
 
-document.getElementById('form-btn').addEventListener('click', function() {
+document.getElementById('form-btn').addEventListener('click', async function() {
   const inputs = document.querySelectorAll('.form-box input, .form-box select, .form-box textarea');
   const lead = {};
   ['nombre','empresa','correo','telefono','servicio','mensaje'].forEach((k, i) => { lead[k] = inputs[i]?.value || '' });
   if (!lead.nombre || !lead.correo) { alert('Por favor llena nombre y correo.'); return; }
   saveLead(lead);
-
-  const cuerpo = encodeURIComponent(
-`Nueva cotización — RGT Transport
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Nombre:   ${lead.nombre}
-Empresa:  ${lead.empresa}
-Correo:   ${lead.correo}
-Teléfono: ${lead.telefono}
-Servicio: ${lead.servicio}
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-${lead.mensaje}`
-  );
-  window.location.href = `mailto:ventas@rgttransport.com?subject=Cotización — ${lead.empresa || lead.nombre}&body=${cuerpo}`;
+  this.disabled = true;
+  const b = encodeURIComponent(`Nombre: ${lead.nombre}\nEmpresa: ${lead.empresa}\nCorreo: ${lead.correo}\nTel: ${lead.telefono}\nServicio: ${lead.servicio}\nMensaje: ${lead.mensaje}`);
+  this.textContent = 'Abriendo tu correo... solo da Enviar';
+  this.style.background = '#166534';
+  window.location.href = `mailto:ventas@rgttransport.com?subject=${encodeURIComponent('Cotización RGT Transport')}&body=${b}`;
+  setTimeout(() => {
+    this.textContent = 'Enviar solicitud';
+    this.style.background = '';
+    this.disabled = false;
+    inputs.forEach(el => el.value = '');
+  }, 3500);
 });
 
 // ── LEADS PANEL  Ctrl+Shift+L ────────────────────────────
