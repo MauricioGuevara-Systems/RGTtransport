@@ -968,31 +968,25 @@ const saveLead = (l) => {
   return leads.length;
 };
 
-document.getElementById('form-btn').addEventListener('click', async function() {
+document.getElementById('form-btn').addEventListener('click', function() {
   const inputs = document.querySelectorAll('.form-box input, .form-box select, .form-box textarea');
   const lead = {};
   ['nombre','empresa','correo','telefono','servicio','mensaje'].forEach((k, i) => { lead[k] = inputs[i]?.value || '' });
   if (!lead.nombre || !lead.correo) { alert('Por favor llena nombre y correo.'); return; }
   saveLead(lead);
-  this.textContent = 'Enviando...'; this.disabled = true;
-  try {
-    const r = await fetch('https://formspree.io/f/ventas@rgttransport.com', {
-      method:'POST',
-      headers:{ 'Content-Type':'application/json', 'Accept':'application/json' },
-      body: JSON.stringify({ _subject:'Nueva cotización — RGT Transport', _replyto:lead.correo, ...lead })
-    });
-    this.textContent = '✓ Solicitud enviada';
-    this.style.background = '#166534';
-  } catch(e) {
-    const b = encodeURIComponent(`Nombre: ${lead.nombre}\nEmpresa: ${lead.empresa}\nTel: ${lead.telefono}\nServicio: ${lead.servicio}\nMensaje: ${lead.mensaje}`);
-    window.location.href = `mailto:ventas@rgttransport.com?subject=Cotización RGT Transport&body=${b}`;
-  }
-  setTimeout(() => {
-    this.textContent = 'Enviar solicitud';
-    this.style.background = '';
-    this.disabled = false;
-    inputs.forEach(el => el.value = '');
-  }, 3500);
+
+  const cuerpo = encodeURIComponent(
+`Nueva cotización — RGT Transport
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Nombre:   ${lead.nombre}
+Empresa:  ${lead.empresa}
+Correo:   ${lead.correo}
+Teléfono: ${lead.telefono}
+Servicio: ${lead.servicio}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+${lead.mensaje}`
+  );
+  window.location.href = `mailto:ventas@rgttransport.com?subject=Cotización — ${lead.empresa || lead.nombre}&body=${cuerpo}`;
 });
 
 // ── LEADS PANEL  Ctrl+Shift+L ────────────────────────────
