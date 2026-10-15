@@ -189,6 +189,22 @@ a { text-decoration:none; color:inherit }
   font-size:15px; font-weight:300; color:var(--slate); line-height:1.8; margin-bottom:36px;
 }
 
+/* Selector ruta MTY↔CDMX */
+.ruta-toggle {
+  display:flex; gap:0; margin-top:8px;
+  border:1px solid var(--line); border-radius:12px; overflow:hidden;
+  background:#fff; box-shadow:0 2px 12px rgba(15,23,42,0.06);
+}
+.ruta-btn {
+  flex:1; padding:12px 14px;
+  font-size:13px; font-weight:500; color:var(--slate);
+  background:transparent; border:none; transition:background .15s,color .15s;
+  cursor:pointer; letter-spacing:0.01em;
+}
+.ruta-btn.active { background:var(--navy); color:#fff; font-weight:600; }
+.ruta-btn:first-child { border-radius:11px 0 0 11px }
+.ruta-btn:last-child  { border-radius:0 11px 11px 0 }
+
 /* Tabs destino / otro destino */
 .tab-row {
   display:flex; gap:0; margin-bottom:32px;
@@ -622,185 +638,55 @@ a { text-decoration:none; color:inherit }
       <h2>Calcula tu envío<br>al instante</h2>
       <p>Elige destino y número de tarimas. Con un clic tienes tu solicitud lista para enviarnos por WhatsApp y recibir el precio en minutos.</p>
 
-      <!-- Tabs -->
-      <div class="tab-row" style="flex-wrap:wrap">
-        <button class="tab-btn active" id="tab-chih" onclick="switchTab('chihuahua')">→ Chihuahua</button>
-        <button class="tab-btn" id="tab-cdmx" onclick="switchTab('cdmx')">→ CDMX</button>
-        <button class="tab-btn" id="tab-gdl" onclick="switchTab('gdl')">→ Guadalajara</button>
-        <button class="tab-btn" id="tab-otro" onclick="switchTab('otro')">Otro destino</button>
+      <!-- Selector de dirección -->
+      <div class="fld">
+        <label>Dirección del envío</label>
+        <div class="ruta-toggle">
+          <button class="ruta-btn active" id="btn-mty-cdmx" onclick="setRuta('mty-cdmx')">Monterrey → CDMX</button>
+          <button class="ruta-btn" id="btn-cdmx-mty" onclick="setRuta('cdmx-mty')">CDMX → Monterrey</button>
+        </div>
       </div>
-
-      <!-- Panel Chihuahua -->
-      <div class="tab-panel active" id="panel-chihuahua">
-        <div class="fld">
-          <label>Origen</label>
-          <input type="text" value="Monterrey, N.L." disabled style="opacity:0.5;cursor:not-allowed">
-        </div>
-        <div class="fld">
-          <label>Destino</label>
-          <input type="text" value="Chihuahua, Chih." disabled style="opacity:0.5;cursor:not-allowed">
-        </div>
-        <div class="fld">
-          <label>Número de tarimas</label>
-          <div>
-            <div class="stepper-wrap">
-              <button class="step-btn" id="btn-minus" onclick="changeTarima(-1)">−</button>
-              <div class="step-val" id="tarima-val">1</div>
-              <button class="step-btn" id="btn-plus" onclick="changeTarima(1)">+</button>
-            </div>
-            <div class="step-max">Máximo 14 tarimas por Torton</div>
+      <div class="fld">
+        <label>Número de tarimas</label>
+        <div>
+          <div class="stepper-wrap">
+            <button class="step-btn" id="btn-minus" onclick="changeTarima(-1)" disabled>−</button>
+            <div class="step-val" id="tarima-val">1</div>
+            <button class="step-btn" id="btn-plus" onclick="changeTarima(1)">+</button>
           </div>
+          <div class="step-max">Máximo 14 tarimas por Torton</div>
         </div>
-        <div class="form-row">
-          <div class="fld">
-            <label>Tu nombre</label>
-            <input type="text" id="chih-nombre" placeholder="Ej. Carlos Rodríguez">
-          </div>
-          <div class="fld">
-            <label>Empresa (opcional)</label>
-            <input type="text" id="chih-empresa" placeholder="Nombre de tu empresa">
-          </div>
-        </div>
-        <button class="cta-wa" id="btn-wa-chih" onclick="sendWA()">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.002 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.979-1.418A9.96 9.96 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12.002 2zm-.002 18a7.96 7.96 0 0 1-4.073-1.117l-.292-.174-3.03.863.862-3.015-.19-.309A7.96 7.96 0 0 1 4 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg>
-          Apartar espacio por WhatsApp
-        </button>
       </div>
-
-      <!-- Panel CDMX -->
-      <div class="tab-panel" id="panel-cdmx">
+      <div class="form-row">
         <div class="fld">
-          <label>Origen</label>
-          <input type="text" value="Monterrey, N.L." disabled style="opacity:0.5;cursor:not-allowed">
+          <label>Tu nombre</label>
+          <input type="text" id="cdmx-nombre" placeholder="Ej. Carlos Rodríguez">
         </div>
         <div class="fld">
-          <label>Destino</label>
-          <input type="text" value="Ciudad de México, CDMX" disabled style="opacity:0.5;cursor:not-allowed">
+          <label>Empresa (opcional)</label>
+          <input type="text" id="cdmx-empresa" placeholder="Nombre de tu empresa">
         </div>
-        <div class="fld">
-          <label>Número de tarimas</label>
-          <div>
-            <div class="stepper-wrap">
-              <button class="step-btn" id="btn-minus-cdmx" onclick="changeTarimaDest('cdmx',-1)">−</button>
-              <div class="step-val" id="tarima-val-cdmx">1</div>
-              <button class="step-btn" id="btn-plus-cdmx" onclick="changeTarimaDest('cdmx',1)">+</button>
-            </div>
-            <div class="step-max">Máximo 14 tarimas por Torton</div>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="fld">
-            <label>Tu nombre</label>
-            <input type="text" id="cdmx-nombre" placeholder="Ej. Carlos Rodríguez">
-          </div>
-          <div class="fld">
-            <label>Empresa (opcional)</label>
-            <input type="text" id="cdmx-empresa" placeholder="Nombre de tu empresa">
-          </div>
-        </div>
-        <button class="cta-wa" onclick="sendWADest('cdmx')">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.002 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.979-1.418A9.96 9.96 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12.002 2zm-.002 18a7.96 7.96 0 0 1-4.073-1.117l-.292-.174-3.03.863.862-3.015-.19-.309A7.96 7.96 0 0 1 4 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg>
-          Apartar espacio por WhatsApp
-        </button>
       </div>
-
-      <!-- Panel Guadalajara -->
-      <div class="tab-panel" id="panel-gdl">
-        <div class="fld">
-          <label>Origen</label>
-          <input type="text" value="Monterrey, N.L." disabled style="opacity:0.5;cursor:not-allowed">
-        </div>
-        <div class="fld">
-          <label>Destino</label>
-          <input type="text" value="Guadalajara, Jal." disabled style="opacity:0.5;cursor:not-allowed">
-        </div>
-        <div class="fld">
-          <label>Número de tarimas</label>
-          <div>
-            <div class="stepper-wrap">
-              <button class="step-btn" id="btn-minus-gdl" onclick="changeTarimaDest('gdl',-1)">−</button>
-              <div class="step-val" id="tarima-val-gdl">1</div>
-              <button class="step-btn" id="btn-plus-gdl" onclick="changeTarimaDest('gdl',1)">+</button>
-            </div>
-            <div class="step-max">Máximo 14 tarimas por Torton</div>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="fld">
-            <label>Tu nombre</label>
-            <input type="text" id="gdl-nombre" placeholder="Ej. Carlos Rodríguez">
-          </div>
-          <div class="fld">
-            <label>Empresa (opcional)</label>
-            <input type="text" id="gdl-empresa" placeholder="Nombre de tu empresa">
-          </div>
-        </div>
-        <button class="cta-wa" onclick="sendWADest('gdl')">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.002 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.979-1.418A9.96 9.96 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12.002 2zm-.002 18a7.96 7.96 0 0 1-4.073-1.117l-.292-.174-3.03.863.862-3.015-.19-.309A7.96 7.96 0 0 1 4 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg>
-          Apartar espacio por WhatsApp
-        </button>
-      </div>
-
-      <!-- Panel Otro destino -->
-      <div class="tab-panel" id="panel-otro">
-        <p style="font-size:14px;color:var(--slate);line-height:1.75;margin-bottom:20px">
-          Si tu destino no está en nuestra ruta activa, dinos a dónde quieres enviar. Estamos abriendo nuevas rutas constantemente y te avisamos en cuanto haya salida.
-        </p>
-        <div class="fld">
-          <label>Origen</label>
-          <input type="text" value="Monterrey, N.L." disabled style="opacity:0.5;cursor:not-allowed">
-        </div>
-        <div class="fld">
-          <label>¿A dónde quieres enviar?</label>
-          <input type="text" id="otro-destino" placeholder="Ej. Guadalajara, Ciudad Juárez, Saltillo...">
-        </div>
-        <div class="fld">
-          <label>Número aproximado de tarimas</label>
-          <select id="otro-tarimas">
-            <option value="1">1 tarima</option>
-            <option value="2">2 tarimas</option>
-            <option value="3-5">3 a 5 tarimas</option>
-            <option value="6-10">6 a 10 tarimas</option>
-            <option value="11-14">11 a 14 tarimas (Torton completo)</option>
-          </select>
-        </div>
-        <div class="form-row">
-          <div class="fld">
-            <label>Tu nombre</label>
-            <input type="text" id="otro-nombre" placeholder="Ej. Ana González">
-          </div>
-          <div class="fld">
-            <label>Empresa (opcional)</label>
-            <input type="text" id="otro-empresa" placeholder="Nombre de tu empresa">
-          </div>
-        </div>
-        <button class="cta-wa" onclick="sendWAOtro()">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.002 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.979-1.418A9.96 9.96 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12.002 2zm-.002 18a7.96 7.96 0 0 1-4.073-1.117l-.292-.174-3.03.863.862-3.015-.19-.309A7.96 7.96 0 0 1 4 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg>
-          Enviar a WhatsApp
-        </button>
-      </div>
+      <button class="cta-wa" onclick="sendWA()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.002 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.979-1.418A9.96 9.96 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12.002 2zm-.002 18a7.96 7.96 0 0 1-4.073-1.117l-.292-.174-3.03.863.862-3.015-.19-.309A7.96 7.96 0 0 1 4 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg>
+        Apartar espacio por WhatsApp
+      </button>
     </div>
 
     <!-- Derecha: tarjeta de cotización -->
     <div class="quot-card rv" id="quot-card">
       <span class="quot-card-label">Tu cotización</span>
 
-      <!-- Precio destino activo -->
+      <!-- Resumen de solicitud -->
       <div id="price-block">
-        <div class="quot-route">Monterrey, N.L.<br><span>→</span> <span id="card-destino">Chihuahua, Chih.</span></div>
+        <div class="quot-route" id="card-ruta">Monterrey, N.L.<br><span>→</span> Ciudad de México, CDMX</div>
         <div class="quot-tarimas-label" id="tarimas-label">1 tarima</div>
         <div class="quot-price-block">
           <span class="quot-price-tag">Resumen de solicitud</span>
-          <div class="quot-summary-line" id="summary-line">1 tarima · Monterrey → Chihuahua</div>
+          <div class="quot-summary-line" id="summary-line">1 tarima · Monterrey → CDMX</div>
           <div id="card-nombre-empresa" style="font-size:13px;color:rgba(255,255,255,0.45);margin-bottom:10px;display:none"></div>
           <div class="quot-cta-note">El precio lo recibes por WhatsApp en minutos. Sin costo ni compromiso.</div>
         </div>
-      </div>
-
-      <!-- Mensaje otro destino -->
-      <div class="quot-other-msg" id="other-block">
-        <strong>Registramos tu interés</strong>
-        <p>Cuando tengamos salida hacia tu destino, serás de los primeros en enterarte. También podemos cotizarte flota dedicada si el volumen lo amerita.</p>
       </div>
 
       <!-- Estado: solicitud enviada -->
@@ -829,177 +715,80 @@ a { text-decoration:none; color:inherit }
 
 <script>
 // ── CONFIG ────────────────────────────────────────────────
-const WA_NUMBER = '528112081508';
+const WA_NUMBER   = '528112081508';
 const MAX_TARIMAS = 14;
 
-// ── ESTADO ────────────────────────────────────────────────
-let tarimas = 1;
-let modoActivo = 'chihuahua';
-
-const DESTINOS = {
-  chihuahua: { label: 'Chihuahua, Chih.', short: 'Chihuahua' },
-  cdmx:      { label: 'Ciudad de México, CDMX', short: 'CDMX' },
-  gdl:       { label: 'Guadalajara, Jal.', short: 'Guadalajara' },
+const RUTAS = {
+  'mty-cdmx': { origen: 'Monterrey, N.L.',       destino: 'Ciudad de México, CDMX', short: 'CDMX' },
+  'cdmx-mty': { origen: 'Ciudad de México, CDMX', destino: 'Monterrey, N.L.',       short: 'Monterrey' },
 };
-const tarimaDest = { cdmx: 1, gdl: 1 };
+
+// ── ESTADO ────────────────────────────────────────────────
+let tarimas   = 1;
+let rutaActiva = 'mty-cdmx';
 
 // ── HERO BG ───────────────────────────────────────────────
 const heroBg = document.getElementById('hero-bg');
 setTimeout(() => heroBg.classList.add('loaded'), 50);
 
-// ── TABS ─────────────────────────────────────────────────
-function switchTab(modo) {
-  modoActivo = modo;
-  ['chihuahua','cdmx','gdl','otro'].forEach(m => {
-    const tabId = m === 'chihuahua' ? 'tab-chih' : m === 'otro' ? 'tab-otro' : 'tab-' + m;
-    const tab = document.getElementById(tabId);
-    if (tab) tab.classList.toggle('active', m === modo);
-    const panel = document.getElementById('panel-' + m);
-    if (panel) panel.classList.toggle('active', m === modo);
-  });
-  const isDestino = DESTINOS[modo];
-  document.getElementById('price-block').style.display = isDestino ? 'block' : 'none';
-  document.getElementById('other-block').style.display = modo === 'otro' ? 'block' : 'none';
-  if (isDestino) {
-    document.getElementById('card-destino').textContent = DESTINOS[modo].label;
-    // Sincronizar tarimas con el stepper del destino activo
-    if (modo === 'chihuahua') {
-      // tarimas ya maneja su propio estado
-    } else {
-      tarimas = tarimaDest[modo];
-    }
-    updatePrice();
-  }
+// ── SELECTOR DE RUTA ──────────────────────────────────────
+function setRuta(ruta) {
+  rutaActiva = ruta;
+  document.getElementById('btn-mty-cdmx').classList.toggle('active', ruta === 'mty-cdmx');
+  document.getElementById('btn-cdmx-mty').classList.toggle('active', ruta === 'cdmx-mty');
+  updateCard();
 }
 
-// ── STEPPER CHIHUAHUA ─────────────────────────────────────
+// ── STEPPER ───────────────────────────────────────────────
 function changeTarima(delta) {
   tarimas = Math.min(MAX_TARIMAS, Math.max(1, tarimas + delta));
   document.getElementById('tarima-val').textContent = tarimas;
   document.getElementById('btn-minus').disabled = tarimas <= 1;
   document.getElementById('btn-plus').disabled  = tarimas >= MAX_TARIMAS;
-  updatePrice();
+  updateCard();
 }
 
-function updatePrice() {
+// ── TARJETA ───────────────────────────────────────────────
+function updateCard() {
+  const r = RUTAS[rutaActiva];
   const t = tarimas === 1 ? '1 tarima' : `${tarimas} tarimas`;
   document.getElementById('tarimas-label').textContent = t;
-  const dest = DESTINOS[modoActivo] ? DESTINOS[modoActivo].short : 'Chihuahua';
-  document.getElementById('summary-line').textContent = `${t} · Monterrey → ${dest}`;
-  updateCardPerson();
-}
-
-function updateCardPerson() {
-  // Detect which panel is active and get nombre/empresa fields
-  let nombre = '', empresa = '';
-  if (modoActivo === 'chihuahua') {
-    nombre  = (document.getElementById('chih-nombre')?.value || '').trim();
-    empresa = (document.getElementById('chih-empresa')?.value || '').trim();
-  } else if (modoActivo === 'cdmx') {
-    nombre  = (document.getElementById('cdmx-nombre')?.value || '').trim();
-    empresa = (document.getElementById('cdmx-empresa')?.value || '').trim();
-  } else if (modoActivo === 'gdl') {
-    nombre  = (document.getElementById('gdl-nombre')?.value || '').trim();
-    empresa = (document.getElementById('gdl-empresa')?.value || '').trim();
-  }
+  document.getElementById('summary-line').textContent  = `${t} · ${r.origen.split(',')[0]} → ${r.short}`;
+  document.getElementById('card-ruta').innerHTML =
+    `${r.origen}<br><span>→</span> ${r.destino}`;
+  const nombre  = (document.getElementById('cdmx-nombre')?.value  || '').trim();
+  const empresa = (document.getElementById('cdmx-empresa')?.value || '').trim();
   const el = document.getElementById('card-nombre-empresa');
-  if (!el) return;
   const parts = [];
   if (nombre)  parts.push('👤 ' + nombre);
   if (empresa) parts.push('🏢 ' + empresa);
-  if (parts.length) {
-    el.textContent = parts.join(' · ');
-    el.style.display = 'block';
-  } else {
-    el.style.display = 'none';
-  }
+  if (parts.length) { el.textContent = parts.join(' · '); el.style.display = 'block'; }
+  else { el.style.display = 'none'; }
 }
 
-// ── STEPPER DESTINOS CDMX / GDL ──────────────────────────
-function changeTarimaDest(dest, delta) {
-  tarimaDest[dest] = Math.min(MAX_TARIMAS, Math.max(1, tarimaDest[dest] + delta));
-  document.getElementById('tarima-val-' + dest).textContent = tarimaDest[dest];
-  document.getElementById('btn-minus-' + dest).disabled = tarimaDest[dest] <= 1;
-  document.getElementById('btn-plus-' + dest).disabled  = tarimaDest[dest] >= MAX_TARIMAS;
-  // Si este es el destino activo, actualiza la tarjeta
-  if (modoActivo === dest) {
-    tarimas = tarimaDest[dest];
-    updatePrice();
-  }
-}
-
-// ── SHOW SENT STATE ───────────────────────────────────────
+// ── SHOW / RESET SENT ─────────────────────────────────────
 function showSent() {
-  document.getElementById('price-block').style.display  = 'none';
-  document.getElementById('other-block').style.display  = 'none';
-  const sent = document.getElementById('sent-block');
-  sent.style.display = 'flex';
+  document.getElementById('price-block').style.display = 'none';
+  document.getElementById('sent-block').style.display  = 'flex';
 }
-
 function resetCard() {
-  document.getElementById('sent-block').style.display = 'none';
-  const isDestino = DESTINOS[modoActivo];
-  document.getElementById('price-block').style.display = isDestino ? 'block' : 'none';
-  document.getElementById('other-block').style.display = modoActivo === 'otro' ? 'block' : 'none';
+  document.getElementById('sent-block').style.display  = 'none';
+  document.getElementById('price-block').style.display = 'block';
 }
 
-// ── WHATSAPP CHIHUAHUA ────────────────────────────────────
+// ── WHATSAPP ──────────────────────────────────────────────
 function sendWA() {
-  const nombre  = document.getElementById('chih-nombre').value.trim();
-  const empresa = document.getElementById('chih-empresa').value.trim();
+  const r       = RUTAS[rutaActiva];
+  const nombre  = document.getElementById('cdmx-nombre').value.trim();
+  const empresa = document.getElementById('cdmx-empresa').value.trim();
   const t = tarimas === 1 ? '1 tarima' : `${tarimas} tarimas`;
 
   let msg = `Hola RGT Transport, quiero cotizar carga consolidada:\n\n`;
-  msg += `📦 Ruta: Monterrey → Chihuahua\n`;
+  msg += `📦 Ruta: ${r.origen.split(',')[0]} → ${r.destino.split(',')[0]}\n`;
   msg += `📐 Tarimas: ${t}\n`;
   if (nombre)  msg += `👤 Nombre: ${nombre}\n`;
   if (empresa) msg += `🏢 Empresa: ${empresa}\n`;
   msg += `\n¿Cuál es el precio y la próxima salida disponible?`;
-
-  window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
-  showSent();
-}
-
-// ── WHATSAPP CDMX / GDL ──────────────────────────────────
-function sendWADest(dest) {
-  const n      = tarimaDest[dest];
-  const t      = n === 1 ? '1 tarima' : `${n} tarimas`;
-  const nombre  = document.getElementById(dest + '-nombre').value.trim();
-  const empresa = document.getElementById(dest + '-empresa').value.trim();
-  const destLabel = DESTINOS[dest].label;
-
-  let msg = `Hola RGT Transport, quiero cotizar carga consolidada:\n\n`;
-  msg += `📦 Ruta: Monterrey → ${destLabel}\n`;
-  msg += `📐 Tarimas: ${t}\n`;
-  if (nombre)  msg += `👤 Nombre: ${nombre}\n`;
-  if (empresa) msg += `🏢 Empresa: ${empresa}\n`;
-  msg += `\n¿Cuál es el precio y la próxima salida disponible?`;
-
-  window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
-  showSent();
-}
-
-// ── WHATSAPP OTRO DESTINO ─────────────────────────────────
-function sendWAOtro() {
-  const destino  = document.getElementById('otro-destino').value.trim();
-  const tarTxt   = document.getElementById('otro-tarimas').value;
-  const nombre   = document.getElementById('otro-nombre').value.trim();
-  const empresa  = document.getElementById('otro-empresa').value.trim();
-
-  if (!destino) {
-    document.getElementById('otro-destino').focus();
-    document.getElementById('otro-destino').style.borderColor = '#EF4444';
-    setTimeout(() => document.getElementById('otro-destino').style.borderColor = '', 2000);
-    return;
-  }
-
-  let msg = `Hola RGT Transport, me interesa carga consolidada a un destino nuevo:\n\n`;
-  msg += `📍 Destino: ${destino}\n`;
-  msg += `📦 Origen: Monterrey, N.L.\n`;
-  msg += `📐 Tarimas aprox: ${tarTxt}\n`;
-  if (nombre)  msg += `👤 Nombre: ${nombre}\n`;
-  if (empresa) msg += `🏢 Empresa: ${empresa}\n`;
-  msg += `\n¿Tienen o pueden abrir esta ruta?`;
 
   window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
   showSent();
@@ -1008,29 +797,21 @@ function sendWAOtro() {
 // ── NAV SCROLL ────────────────────────────────────────────
 window.addEventListener('scroll', () => {
   document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
-}, { passive:true });
+}, { passive: true });
 
 // ── REVEAL ────────────────────────────────────────────────
 const obs = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if (e.isIntersecting) { e.target.classList.add('on'); obs.unobserve(e.target); }
   });
-}, { threshold:0.07, rootMargin:'0px 0px -16px 0px' });
+}, { threshold: 0.07, rootMargin: '0px 0px -16px 0px' });
 document.querySelectorAll('.rv').forEach(el => obs.observe(el));
 
 // ── INIT ──────────────────────────────────────────────────
-updatePrice();
-document.getElementById('price-block').style.display = 'block';
-document.getElementById('other-block').style.display = 'none';
-
-// Live sync nombre/empresa → card
-['chih-nombre','chih-empresa','cdmx-nombre','cdmx-empresa','gdl-nombre','gdl-empresa'].forEach(id => {
-  const el = document.getElementById(id);
-  if (el) el.addEventListener('input', updateCardPerson);
+updateCard();
+['cdmx-nombre','cdmx-empresa'].forEach(id => {
+  document.getElementById(id)?.addEventListener('input', updateCard);
 });
-// Steppers secundarios: deshabilitar minus al inicio
-document.getElementById('btn-minus-cdmx').disabled = true;
-document.getElementById('btn-minus-gdl').disabled  = true;
 </script>
 </body>
 </html>
